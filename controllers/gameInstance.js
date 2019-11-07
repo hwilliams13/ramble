@@ -82,5 +82,5 @@ gameInstanceRouter.delete('/:gameInstanceId', (req, res) => {
  *
  */
 module.exports = {
-  templateRouter
+  gameInstanceRouter
 }

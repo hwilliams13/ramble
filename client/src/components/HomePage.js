@@ -14,6 +14,7 @@ class HomePage extends React.Component {
 
         axios.get('/api/gameInstance')
             .then((response) => {
+                console.log(response);
                 const gameList = response.data;
                 const availableGameAmount = gameList.length;
                 this.setState({availableGameAmount: availableGameAmount});

@@ -4,6 +4,8 @@ import axios from 'axios';
 
 import { Link } from 'react-router-dom';
 
+import GameLobbyGameItem from './GameLobbyGameItem.js';
+
 class GameLobby extends React.Component {
 
     state = {
@@ -55,7 +57,7 @@ class GameLobby extends React.Component {
                 <h5>Available Games:</h5>
                 {this.state.availableGameList.map((game) => {
                     return (
-                        <Link to={`/${game._id}`}>{game.name}</Link>
+                        <Link to={`/${game._id}`}><GameLobbyGameItem gameData={game} /></Link>
                     )
                 })}
             </div>

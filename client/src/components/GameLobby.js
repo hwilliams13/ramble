@@ -57,7 +57,17 @@ class GameLobby extends React.Component {
                 <h5>Available Games:</h5>
                 {this.state.availableGameList.map((game) => {
                     return (
-                        <Link to={`/${game._id}`}><GameLobbyGameItem gameData={game} /></Link>
+                        <Link to={
+                            (game.playerPresent.player1 && game.playerPresent.player2) ?
+                            `/lobby/${game._id}` :
+                            (
+                                game.playerPresent.player1 ?
+                                `/lobby/playerTwo/${game._id}` :
+                                `/lobby/playerOne/${game._id}`
+                            )
+                            }>
+                                <GameLobbyGameItem gameData={game} />
+                        </Link>
                     )
                 })}
             </div>

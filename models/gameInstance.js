@@ -228,7 +228,7 @@ const GameInstanceSchema = new mongoose.Schema({
      [{...thrWrd}, {...nrmSpc}, {...nrmSpc}, {...twoLet}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...thrWrd}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...twoLet}, {...nrmSpc}, {...nrmSpc}, {...thrWrd}]
    ]
  },
- tilesRemaining: { // Array of objects
+ remainingTileList: { // Array of objects
    type: Array,
    default: [...tileArray]
  },
@@ -241,6 +241,16 @@ const GameInstanceSchema = new mongoose.Schema({
     type: Boolean,
     default: false
    }
+ },
+ playerTurn: {
+  player1: {
+    type: Boolean,
+    default: true
+  },
+  player2: {
+   type: Boolean,
+   default: false
+  }
  }
 })
 

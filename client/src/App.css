@@ -1,5 +1,21 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
 .App {
   text-align: center;
+}
+
+#nav-bar {
+  width: 100vw;
+}
+
+#main-body {
+  width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
 }
 
 .App-logo {

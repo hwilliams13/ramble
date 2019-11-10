@@ -7,8 +7,23 @@ import { Link } from 'react-router-dom';
 class GameRoom extends React.Component {
 
     state = {
-        gameInstance: {}
+        gameInstance: {
+            name: '',
+            gameBoard: [],
+            remainingTileList: [],
+            playerPresent: {
+                player1: false,
+                player2: false
+            },
+            playerTurn: {
+                player1: false,
+                player2: false
+            }
+        }
     }
+
+
+    
 
     render() {
         return (

@@ -32,7 +32,7 @@ const twoWrd = {mult: 2, mType: "word", currentTile: null}; // 2x word score
 const thrLet = {mult: 3, mType: "letter", currentTile: null}; // 3x letter score
 const twoLet = {mult: 2, mType: "letter", currentTile: null}; // 2x letter score
 
-const nrmSpc = {currentTile: null}; // normal space
+const nrmSpc = {mult: 1, mType: "normal", currentTile: null}; // normal space
 
 // tiles
 const tileBlank = {

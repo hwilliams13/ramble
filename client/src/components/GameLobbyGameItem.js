@@ -39,7 +39,11 @@ class GameLobbyGameItem extends React.Component {
                     (
                         this.state.thisGame.playerPresent.player1 ?
                         <p>Awaiting Player 2</p> :
-                        <p>Empty</p>
+                        (
+                            this.state.thisGame.playerPresent.player2 ?
+                            <p>Awaiting Player 1</p> :
+                            <p>Empty</p>
+                        )
                     )
                 }
             </div>

@@ -1,0 +1,51 @@
+#player-view {
+    width: 1000px;
+    height: 800px;
+}
+
+#player-view-header {
+    width: 100%;
+    height: 15px;
+}
+
+#play-area {
+    width: 100%;
+    height: 700px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#game-board {
+    width: 602px;
+    height: 602px;
+    display: flex;
+    flex-wrap: wrap;
+    border: 1px solid #000;
+}
+
+.game-board-space {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    font-size: 9px;
+    border: 1px solid #000;
+}
+
+.word-3 {
+    background-color: #f00;
+}
+
+.word-2 {
+    background-color: #da6537;
+}
+
+.letter-3 {
+    background-color: #1780c7;
+}
+
+.letter-2 {
+    background-color: skyblue;
+}

@@ -321,13 +321,47 @@ class PlayerView extends React.Component {
     }
 
     drawTiles = () => {
+        const { gameInstanceId } = this.props.match.params;
         const myCurrentTileList = [...this.state.myCurrentTileList];
-        let remainingTileAmount = this.state.gameInstance.remainingTileList.length;
-        for (let i = 0; i < (7 - myCurrentTileList.length); i++) {
-            let tileDrawn = this.state.gameInstance.remainingTileList.splice((Math.floor(Math.random()*remainingTileAmount)), 1);
+        const remainingTileList = [...this.state.remainingTileList];
+        const remainingTileAmount = remainingTileList.length;
+        const tileAmountAlreadyInHand = myCurrentTileList.length
+        const playAreaElement = document.querySelector("#play-area")
+        for (let i = 0; i < (7 - tileAmountAlreadyInHand); i++) {
+            let tileDrawn = remainingTileList.splice((Math.floor(Math.random()*remainingTileAmount)), 1)[0];
             myCurrentTileList.push(tileDrawn);
-        }
+            let tileElement = document.createElement("div");
+            tileElement.setAttribute("class", "tile")
+            tileElement.innerHTML = tileDrawn.letter;
+            tileElement.style.position = "absolute";
+            tileElement.style.left = `${355+(i*35)}px`;
+            tileElement.style.top = "710.25px";
+            playAreaElement.appendChild(tileElement);
+       }
+
         this.setState({myCurrentTileList: myCurrentTileList});
+        axios.put(`/api/gameInstance/${gameInstanceId}`, {remainingTileList})
+            .then((response) => {
+                console.log(response);
+                this.setState({remainingTileList: remainingTileList});
+            })
+    }
+
+    spaceEnterEventHandler = (e) => {
+        console.log(e.clientX);
+        console.log(e.target);
+        console.log(e.target.getAttribute("id"));
+        const targetXY = e.target.getAttribute("id").split("-");
+        console.log(targetXY);
+        const targetX = targetXY[0];
+        const targetY = targetXY[1];
+        const targetSpace = this.state.gameBoard[targetX][targetY];
+        console.log(targetSpace);
+        console.log(e.target.getBoundingClientRect());
+    }
+
+    tileRackClickEventHandler = (e) => {
+        console.log(e.target.getBoundingClientRect());
     }
 
     render() {
@@ -342,7 +376,7 @@ class PlayerView extends React.Component {
                             return (
                                 row.map((rowSpace, gridX) => {
                                     return (
-                                        <div className={`game-board-space ${rowSpace.mType}-${rowSpace.mult}`} id={`${gridX}-${gridY}`}>
+                                        <div className={`game-board-space ${rowSpace.mType}-${rowSpace.mult}`} id={`${gridX}-${gridY}`} onMouseEnter={this.spaceEnterEventHandler}>
                                             <p>{rowSpace.mult}</p>
                                             <p>{rowSpace.mType}</p>
                                             <p>{rowSpace.currentTile}</p>
@@ -352,8 +386,12 @@ class PlayerView extends React.Component {
                             )
                         })}
                     </div>
+                    <div id="tile-rack-frame">
+                        <div id="tile-rack" onClick={this.tileRackClickEventHandler}></div>
+                        <button onClick={this.drawTiles}>Draw</button>
+                    </div>
+                    <div className="tile" draggable="true"></div>
                 </div>
-                <div></div>
                 <Link to={'/lobby'}><button onClick={this.leaveMatch}>Leave Game</button></Link>
             </div>
         )

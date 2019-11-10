@@ -211,21 +211,21 @@ const GameInstanceSchema = new mongoose.Schema({
  gameBoard: { // Array of objects
    type: Array,
    default: [
-     [{...thrWrd}, {...nrmSpc}, {...nrmSpc}, {...twoLet}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...thrWrd}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...twoLet}, {...nrmSpc}, {...nrmSpc}, {...thrWrd}],
-     [{...nrmSpc}, {...twoWrd}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...thrLet}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...thrLet}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...twoWrd}, {...nrmSpc}],
-     [{...nrmSpc}, {...nrmSpc}, {...twoWrd}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...twoLet}, {...nrmSpc}, {...twoLet}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...twoWrd}, {...nrmSpc}, {...nrmSpc}],
-     [{...twoLet}, {...nrmSpc}, {...nrmSpc}, {...twoWrd}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...twoLet}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...twoWrd}, {...nrmSpc}, {...nrmSpc}, {...twoLet}],
-     [{...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...twoWrd}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...twoWrd}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}],
-     [{...nrmSpc}, {...thrLet}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...thrLet}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...thrLet}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...thrLet}, {...nrmSpc}],
-     [{...nrmSpc}, {...nrmSpc}, {...twoLet}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...twoLet}, {...nrmSpc}, {...twoLet}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...twoLet}, {...nrmSpc}, {...nrmSpc}],
-     [{...thrWrd}, {...nrmSpc}, {...nrmSpc}, {...twoLet}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...thrWrd}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...twoLet}, {...nrmSpc}, {...nrmSpc}, {...thrWrd}],
-     [{...nrmSpc}, {...nrmSpc}, {...twoLet}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...twoLet}, {...nrmSpc}, {...twoLet}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...twoLet}, {...nrmSpc}, {...nrmSpc}],
-     [{...nrmSpc}, {...thrLet}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...thrLet}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...thrLet}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...thrLet}, {...nrmSpc}],
-     [{...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...twoWrd}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...twoWrd}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}],
-     [{...twoLet}, {...nrmSpc}, {...nrmSpc}, {...twoWrd}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...twoLet}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...twoWrd}, {...nrmSpc}, {...nrmSpc}, {...twoLet}],
-     [{...nrmSpc}, {...nrmSpc}, {...twoWrd}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...twoLet}, {...nrmSpc}, {...twoLet}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...twoWrd}, {...nrmSpc}, {...nrmSpc}],
-     [{...nrmSpc}, {...twoWrd}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...thrLet}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...thrLet}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...twoWrd}, {...nrmSpc}],
-     [{...thrWrd}, {...nrmSpc}, {...nrmSpc}, {...twoLet}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...thrWrd}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...twoLet}, {...nrmSpc}, {...nrmSpc}, {...thrWrd}]
+     [{...thrWrd}, {...nrmSpc}, {...nrmSpc}, {...twoLet}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...thrWrd}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...twoLet}, {...nrmSpc}, {...nrmSpc}, {...thrWrd}], // row 0
+     [{...nrmSpc}, {...twoWrd}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...thrLet}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...thrLet}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...twoWrd}, {...nrmSpc}], // row 1
+     [{...nrmSpc}, {...nrmSpc}, {...twoWrd}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...twoLet}, {...nrmSpc}, {...twoLet}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...twoWrd}, {...nrmSpc}, {...nrmSpc}], // row 2
+     [{...twoLet}, {...nrmSpc}, {...nrmSpc}, {...twoWrd}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...twoLet}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...twoWrd}, {...nrmSpc}, {...nrmSpc}, {...twoLet}], // row 3
+     [{...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...twoWrd}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...twoWrd}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}], // row 4
+     [{...nrmSpc}, {...thrLet}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...thrLet}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...thrLet}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...thrLet}, {...nrmSpc}], // row 5
+     [{...nrmSpc}, {...nrmSpc}, {...twoLet}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...twoLet}, {...nrmSpc}, {...twoLet}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...twoLet}, {...nrmSpc}, {...nrmSpc}], // row 6
+     [{...thrWrd}, {...nrmSpc}, {...nrmSpc}, {...twoLet}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...twoWrd}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...twoLet}, {...nrmSpc}, {...nrmSpc}, {...thrWrd}], // row 7
+     [{...nrmSpc}, {...nrmSpc}, {...twoLet}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...twoLet}, {...nrmSpc}, {...twoLet}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...twoLet}, {...nrmSpc}, {...nrmSpc}], // row 8
+     [{...nrmSpc}, {...thrLet}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...thrLet}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...thrLet}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...thrLet}, {...nrmSpc}], // row 9
+     [{...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...twoWrd}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...twoWrd}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}], // row 10
+     [{...twoLet}, {...nrmSpc}, {...nrmSpc}, {...twoWrd}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...twoLet}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...twoWrd}, {...nrmSpc}, {...nrmSpc}, {...twoLet}], // row 11
+     [{...nrmSpc}, {...nrmSpc}, {...twoWrd}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...twoLet}, {...nrmSpc}, {...twoLet}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...twoWrd}, {...nrmSpc}, {...nrmSpc}], // row 12
+     [{...nrmSpc}, {...twoWrd}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...thrLet}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...thrLet}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...twoWrd}, {...nrmSpc}], // row 13
+     [{...thrWrd}, {...nrmSpc}, {...nrmSpc}, {...twoLet}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...thrWrd}, {...nrmSpc}, {...nrmSpc}, {...nrmSpc}, {...twoLet}, {...nrmSpc}, {...nrmSpc}, {...thrWrd}]  // row 14
    ]
  },
  remainingTileList: { // Array of objects
@@ -250,6 +250,16 @@ const GameInstanceSchema = new mongoose.Schema({
   player2: {
    type: Boolean,
    default: false
+  }
+ },
+ score: {
+  player1: {
+    type: Number,
+    default: 0
+  },
+  player2: {
+   type: Number,
+   default: 0
   }
  }
 })

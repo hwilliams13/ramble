@@ -68,10 +68,10 @@
 }
 
 .tile {
-    position: absolute;
+    /* position: absolute; */
     background-color: #b18d5e;
     width: 30px;
     height: 30px;
-    left: 849px;
-    top: 662.5px;
+    /* left: 849px;
+    top: 662.5px; */
 }

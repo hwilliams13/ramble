@@ -72,13 +72,31 @@ class PlayerView extends React.Component {
         myCurrentTileList: [null, null, null, null, null, null, null],
         myPlayer: '',
         currentPlayPointValue: 0,
-        tileBeingPlayed: {}
+        tileBeingPlayed: {},
+        targetSpace: {
+            targetX: 0,
+            targetY: 0
+        },
+        currentPlay: {
+            lastPlay: {
+                lastX: 14,
+                lastY: 14
+            },
+            start: {
+                startX: 14,
+                startY: 14
+            },
+            end: {
+                endX: 0,
+                endY: 0
+            }
+        }
     }
 
-    targetSPace = {
-        targetX: 0,
-        targetY: 0
-    }
+    // targetSpace = {
+    //     targetX: 0,
+    //     targetY: 0
+    // }
 
     refreshData = () => {
         const { gameInstanceId } = this.props.match.params;
@@ -95,6 +113,7 @@ class PlayerView extends React.Component {
                 previousState.remainingTileList = response.data[0].remainingTileList;
                 previousState.playerPresent = response.data[0].playerPresent;
                 previousState.playerTurn = response.data[0].playerTurn;
+                previousState.score = response.data[0].score;
                 this.setState(previousState);
             })
     }
@@ -331,6 +350,17 @@ class PlayerView extends React.Component {
         this.joinMatch();
     }
 
+    startGame = () => {
+        const player = path.split('/')[2];
+        if (this.state.playerPresent.player1 && this.state.playerPresent.player2) {
+
+        }
+    }
+
+    // submitPlay = () => {
+    //     if ()
+    // }
+
     drawTiles = () => {
         const { gameInstanceId } = this.props.match.params;
         const myCurrentTileList = [...this.state.myCurrentTileList];
@@ -340,7 +370,7 @@ class PlayerView extends React.Component {
             let remainingTileAmount = remainingTileList.length;
             if (myCurrentTileList[i] == null) {
                 let tileDrawn = remainingTileList.splice((Math.floor(Math.random()*remainingTileAmount)), 1)[0];
-                myCurrentTileList.push(tileDrawn);
+                myCurrentTileList[i] = {...tileDrawn};
                 let tileElement = document.createElement("div");
                 tileElement.setAttribute("class", "tile");
                 tileElement.setAttribute("draggable", "true");
@@ -355,7 +385,6 @@ class PlayerView extends React.Component {
                 tileElement.addEventListener('drag', this.dragHandler);
                 tileElement.addEventListener('dragend', this.dragStopHandler);
                 playAreaElement.appendChild(tileElement);
-                
             }
        }
 
@@ -492,14 +521,26 @@ class PlayerView extends React.Component {
         const playAreaElement = document.querySelector("#play-area");
         this.removeTileFromHand(tileBeingPlayed);
         playAreaElement.removeChild(e.target);
-        console.log(this.targetSPace.targetX);
+        console.log(this.state.targetSpace.targetX);
         const gameBoard = [...this.state.gameBoard];
-        gameBoard[this.targetSPace.targetX][this.targetSPace.targetY].currentTile = {...this.state.tileBeingPlayed};
+        gameBoard[this.state.targetSpace.targetX][this.state.targetSpace.targetY].currentTile = {...this.state.tileBeingPlayed};
         this.setState({gameBoard: gameBoard});
         const { gameInstanceId } = this.props.match.params;
         axios.put(`/api/gameInstance/${gameInstanceId}`, {gameBoard})
             .then((response) => {
                 console.log(response);
+                const currentPlay = {...this.state.currentPlay};
+                if ((this.state.targetSpace.targetX >= currentPlay.lastPlay.lastX) && (this.state.targetSpace.targetY >= currentPlay.lastPlay.lastY)) {
+                    currentPlay.end.endX = this.state.targetSpace.targetX;
+                    currentPlay.end.endY = this.state.targetSpace.targetY;
+                }
+                if ((this.state.targetSpace.targetX <= currentPlay.lastPlay.lastX) && (this.state.targetSpace.targetY <= currentPlay.lastPlay.lastY)) {
+                    currentPlay.start.startX = this.state.targetSpace.targetX;
+                    currentPlay.start.startY = this.state.targetSpace.targetY;
+                }
+                currentPlay.lastPlay.lastX = this.state.targetSpace.targetX;
+                currentPlay.lastPlay.lastY = this.state.targetSpace.targetY;
+                this.setState({currentPlay: currentPlay});
             })
     }
 
@@ -508,10 +549,12 @@ class PlayerView extends React.Component {
         // const targetIndex = target.getAttribute("data-index");
         // myCurrentTileList.splice(targetIndex, 1);
         for (let i = 0; i < myCurrentTileList.length; i++) {
-            if (myCurrentTileList[i].letter == target.getAttribute("data-letter")) {
-                myCurrentTileList[i] = null;
-                this.setState({myCurrentTileList: myCurrentTileList});
-                return;
+            if (myCurrentTileList[i] != null) {
+                if (myCurrentTileList[i].letter == target.getAttribute("data-letter")) {
+                    myCurrentTileList[i] = null;
+                    this.setState({myCurrentTileList: myCurrentTileList});
+                    return;
+                }
             }
         }
     }
@@ -523,28 +566,59 @@ class PlayerView extends React.Component {
         // if (this.state.tileInPlay.playingTile) {
         //     return false;
         // }
-        console.log(e.target.getAttribute("class"));
+        console.log(e.target.getAttribute("id"));
         // if(e.target.getAttribute("class") == null) {
         //     return false;
         // }
-        if(e.target.getAttribute("class") != null) {
-            console.log(e.target.getAttribute("id"));
-            const targetXY = e.target.getAttribute("id").split("-");
+        if(e.target.getAttribute("id") != null) {
+            const id = e.target.getAttribute("id");
+            console.log(id);
+            const targetXY = id.split("-");
             // console.log(targetXY);
             const targetX = targetXY[0];
             const targetY = targetXY[1];
             // const targetSpace = this.state.gameBoard[targetX][targetY];
             // console.log(targetSpace);
             // console.log(e.target.getBoundingClientRect());
-            this.targetSPace.targetX = targetX;
-            this.targetSPace.targetY = targetY;
-            console.log(this.targetSPace.targetX);
+            // this.targetSpace.targetX = targetX;
+            // this.targetSpace.targetY = targetY;
+            // console.log(this.targetSpace.targetX);
+            const targetSpace = {...this.state.targetSpace};
+            targetSpace.targetX = targetX;
+            targetSpace.targetY = targetY;
+            console.log(targetSpace);
+            this.setState({targetSpace: targetSpace});
+            // const currentPlay = {
+                
+            // }
+            // if ((targetX >= currentPlay.start.startX) && (targetY >= currentPlay.start.startY)) {
+            //     currentPlay.end.endX = targetX;
+            //     currentPlay.end.endY = targetY;
+            // }
+            // if ((targetX <= currentPlay.end.endX) && (targetY <= currentPlay.end.endY)) {
+            //     currentPlay.start.startX = targetX;
+            //     currentPlay.start.startY = targetY;
+            // }
+            // this.setState({currentPlay: currentPlay});
         }
         // const gameBoard = [...this.state.gameBoard];
         // gameBoard[targetX][targetY].currentTile = {...this.state.tileBeingPlayed};
-        // this.targetSPace = {...gameBoard[targetX][targetY]};
+        // this.targetSpace = {...gameBoard[targetX][targetY]};
         // this.setState({gameBoard: gameBoard});
     }
+
+    // trackCurrentPlay = () => {
+    //     const currentPlay = {...this.state.currentPlay};
+    //         if ((targetX >= currentPlay.start.startX) && (targetY >= currentPlay.start.startY)) {
+    //             currentPlay.end.endX = targetX;
+    //             currentPlay.end.endY = targetY;
+    //         }
+    //         if ((targetX <= currentPlay.end.endX) && (targetY <= currentPlay.end.endY)) {
+    //             currentPlay.start.startX = targetX;
+    //             currentPlay.start.startY = targetY;
+    //         }
+    //         this.setState({currentPlay: currentPlay});
+    // }
 
     // dropHandler = (e) => {
     //     e.preventDefault();
@@ -605,7 +679,7 @@ class PlayerView extends React.Component {
                         <div id="tile-rack" onClick={this.tileRackClickEventHandler}></div>
                         <button onClick={this.drawTiles}>Draw</button>
                     </div>
-                    <p className="tile" data-point-value={5} data-letter={`T`} style={{position: 'absolute', left: '849px', top: '662.5px'}} draggable="true" onDragStart={this.dragStartHandler} onDrag={this.dragHandler} onDragEnd={this.dragStopHandler}>T</p>
+                    {/* <p className="tile" data-point-value={5} data-letter={`T`} style={{position: 'absolute', left: '849px', top: '662.5px'}} draggable="true" onDragStart={this.dragStartHandler} onDrag={this.dragHandler} onDragEnd={this.dragStopHandler}>T</p> */}
                 </div>
                 <Link to={'/lobby'}><button onClick={this.leaveMatch}>Leave Game</button></Link>
             </div>

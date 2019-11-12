@@ -355,6 +355,7 @@ class PlayerView extends React.Component {
                 tileElement.addEventListener('drag', this.dragHandler);
                 tileElement.addEventListener('dragend', this.dragStopHandler);
                 playAreaElement.appendChild(tileElement);
+                
             }
        }
 

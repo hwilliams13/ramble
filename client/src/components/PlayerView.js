@@ -69,7 +69,7 @@ class PlayerView extends React.Component {
             player1: 0,
             player2: 0,
         },
-        myCurrentTileList: [],
+        myCurrentTileList: [null, null, null, null, null, null, null],
         myPlayer: '',
         currentPlayPointValue: 0,
         tileBeingPlayed: {}
@@ -335,25 +335,27 @@ class PlayerView extends React.Component {
         const { gameInstanceId } = this.props.match.params;
         const myCurrentTileList = [...this.state.myCurrentTileList];
         const remainingTileList = [...this.state.remainingTileList];
-        const remainingTileAmount = remainingTileList.length;
-        const tileAmountAlreadyInHand = myCurrentTileList.length
         const playAreaElement = document.querySelector("#play-area")
-        for (let i = 0; i < (7 - tileAmountAlreadyInHand); i++) {
-            let tileDrawn = remainingTileList.splice((Math.floor(Math.random()*remainingTileAmount)), 1)[0];
-            myCurrentTileList.push(tileDrawn);
-            let tileElement = document.createElement("div");
-            tileElement.setAttribute("class", "tile");
-            tileElement.setAttribute("draggable", "true");
-            tileElement.setAttribute("data-pointValue", tileDrawn.pointValue);
-            tileElement.setAttribute("data-letter", tileDrawn.letter);
-            tileElement.innerHTML = tileDrawn.letter;
-            tileElement.style.position = "absolute";
-            tileElement.style.left = `${355+(i*35)}px`;
-            tileElement.style.top = "710.25px";
-            tileElement.addEventListener('dragstart', this.dragStartHandler)
-            tileElement.addEventListener('drag', this.dragHandler);
-            tileElement.addEventListener('dragend', this.dragStopHandler);
-            playAreaElement.appendChild(tileElement);
+        for (let i = 0; i < 7; i++) {
+            let remainingTileAmount = remainingTileList.length;
+            if (myCurrentTileList[i] == null) {
+                let tileDrawn = remainingTileList.splice((Math.floor(Math.random()*remainingTileAmount)), 1)[0];
+                myCurrentTileList.push(tileDrawn);
+                let tileElement = document.createElement("div");
+                tileElement.setAttribute("class", "tile");
+                tileElement.setAttribute("draggable", "true");
+                tileElement.setAttribute("data-index", i)
+                tileElement.innerHTML = tileDrawn.letter;
+                tileElement.setAttribute("data-letter", tileDrawn.letter);
+                tileElement.setAttribute("data-point-value", tileDrawn.pointValue);
+                tileElement.style.position = "absolute";
+                tileElement.style.left = `${355+(i*35)}px`;
+                tileElement.style.top = "710.25px";
+                tileElement.addEventListener('dragstart', this.dragStartHandler)
+                tileElement.addEventListener('drag', this.dragHandler);
+                tileElement.addEventListener('dragend', this.dragStopHandler);
+                playAreaElement.appendChild(tileElement);
+            }
        }
 
         this.setState({myCurrentTileList: myCurrentTileList});
@@ -407,8 +409,6 @@ class PlayerView extends React.Component {
 
     allowDrop = (e) => {
         e.preventDefault();
-        e.stopPropagation();
-        return false;
     }
 
     // startDragHandler = (e) => {
@@ -462,7 +462,7 @@ class PlayerView extends React.Component {
         console.log(e.target.getAttribute("data-letter"));
         const tileBeingPlayed = {
             letter: e.target.getAttribute("data-letter"),
-            pointValue: parseInt(e.target.getAttribute("data-pointValue"))
+            pointValue: parseInt(e.target.getAttribute("data-point-value"))
         };
         // tileInPlay.playingTile = true;
         this.setState({tileBeingPlayed: tileBeingPlayed});
@@ -489,11 +489,30 @@ class PlayerView extends React.Component {
         // tileInPlay.playingTile = false;
         // this.setState({tileInPlay: tileInPlay});
         const playAreaElement = document.querySelector("#play-area");
+        this.removeTileFromHand(tileBeingPlayed);
         playAreaElement.removeChild(e.target);
         console.log(this.targetSPace.targetX);
         const gameBoard = [...this.state.gameBoard];
         gameBoard[this.targetSPace.targetX][this.targetSPace.targetY].currentTile = {...this.state.tileBeingPlayed};
         this.setState({gameBoard: gameBoard});
+        const { gameInstanceId } = this.props.match.params;
+        axios.put(`/api/gameInstance/${gameInstanceId}`, {gameBoard})
+            .then((response) => {
+                console.log(response);
+            })
+    }
+
+    removeTileFromHand = (target) => {
+        const myCurrentTileList = [...this.state.myCurrentTileList];
+        // const targetIndex = target.getAttribute("data-index");
+        // myCurrentTileList.splice(targetIndex, 1);
+        for (let i = 0; i < myCurrentTileList.length; i++) {
+            if (myCurrentTileList[i].letter == target.getAttribute("data-letter")) {
+                myCurrentTileList[i] = null;
+                this.setState({myCurrentTileList: myCurrentTileList});
+                return;
+            }
+        }
     }
 
     dropTargetHandler = (e) => {
@@ -504,20 +523,22 @@ class PlayerView extends React.Component {
         //     return false;
         // }
         console.log(e.target.getAttribute("class"));
-        if(e.target.getAttribute("class") == null) {
-            return false;
+        // if(e.target.getAttribute("class") == null) {
+        //     return false;
+        // }
+        if(e.target.getAttribute("class") != null) {
+            console.log(e.target.getAttribute("id"));
+            const targetXY = e.target.getAttribute("id").split("-");
+            // console.log(targetXY);
+            const targetX = targetXY[0];
+            const targetY = targetXY[1];
+            // const targetSpace = this.state.gameBoard[targetX][targetY];
+            // console.log(targetSpace);
+            // console.log(e.target.getBoundingClientRect());
+            this.targetSPace.targetX = targetX;
+            this.targetSPace.targetY = targetY;
+            console.log(this.targetSPace.targetX);
         }
-        console.log(e.target.getAttribute("id"));
-        const targetXY = e.target.getAttribute("id").split("-");
-        // console.log(targetXY);
-        const targetX = targetXY[0];
-        const targetY = targetXY[1];
-        // const targetSpace = this.state.gameBoard[targetX][targetY];
-        // console.log(targetSpace);
-        // console.log(e.target.getBoundingClientRect());
-        this.targetSPace.targetX = targetX;
-        this.targetSPace.targetY = targetY;
-        console.log(this.targetSPace.targetX);
         // const gameBoard = [...this.state.gameBoard];
         // gameBoard[targetX][targetY].currentTile = {...this.state.tileBeingPlayed};
         // this.targetSPace = {...gameBoard[targetX][targetY]};
@@ -583,7 +604,7 @@ class PlayerView extends React.Component {
                         <div id="tile-rack" onClick={this.tileRackClickEventHandler}></div>
                         <button onClick={this.drawTiles}>Draw</button>
                     </div>
-                    <p className="tile" data-pointValue={5} data-letter={`T`} style={{position: 'absolute', left: '849px', top: '662.5px'}} draggable="true" onDragStart={this.dragStartHandler} onDrag={this.dragHandler} onDragEnd={this.dragStopHandler}>T</p>
+                    <p className="tile" data-point-value={5} data-letter={`T`} style={{position: 'absolute', left: '849px', top: '662.5px'}} draggable="true" onDragStart={this.dragStartHandler} onDrag={this.dragHandler} onDragEnd={this.dragStopHandler}>T</p>
                 </div>
                 <Link to={'/lobby'}><button onClick={this.leaveMatch}>Leave Game</button></Link>
             </div>

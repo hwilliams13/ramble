@@ -457,7 +457,11 @@ class PlayerView extends React.Component {
     // }
     dragStartHandler = (e) => {
         // e.dataTransfer.setData("id", e.target.id);
-        const tileBeingPlayed = e.target;
+        console.log(typeof(e.target.getAttribute("data")));
+        const tileBeingPlayed = {
+            letter: e.target.innerHTML,
+            pointValue: parseInt(e.target.getAttribute("data"))
+        };
         // tileInPlay.playingTile = true;
         this.setState({tileBeingPlayed: tileBeingPlayed});
     }
@@ -564,7 +568,7 @@ class PlayerView extends React.Component {
                         <div id="tile-rack" onClick={this.tileRackClickEventHandler}></div>
                         <button onClick={this.drawTiles}>Draw</button>
                     </div>
-                    <p className="tile" id="tile-id" style={{position: 'absolute', left: '849px', top: '662.5px'}} draggable="true" onDragStart={this.dragStartHandler} onDrag={this.dragHandler} onDragEnd={this.dragStopHandler}>T</p>
+                    <p className="tile" data={5} style={{position: 'absolute', left: '849px', top: '662.5px'}} draggable="true" onDragStart={this.dragStartHandler} onDrag={this.dragHandler} onDragEnd={this.dragStopHandler}>T</p>
                 </div>
                 <Link to={'/lobby'}><button onClick={this.leaveMatch}>Leave Game</button></Link>
             </div>

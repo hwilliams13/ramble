@@ -261,6 +261,10 @@ const GameInstanceSchema = new mongoose.Schema({
    type: Number,
    default: 0
   }
+ },
+ gameInProgress: {
+   type: Boolean,
+   default: false
  }
 })
 

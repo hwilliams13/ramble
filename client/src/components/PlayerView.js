@@ -69,6 +69,7 @@ class PlayerView extends React.Component {
             player1: 0,
             player2: 0,
         },
+        gameInProgress: false,
         myCurrentTileList: [null, null, null, null, null, null, null],
         myPlayer: '',
         currentPlayPointValue: 0,
@@ -90,7 +91,10 @@ class PlayerView extends React.Component {
                 endX: 0,
                 endY: 0
             }
-        }
+        },
+        waitForPlayerTwoTimer: undefined,
+        waitForTurnTimer: undefined,
+        waitForGameStartTimer: undefined
     }
 
     // targetSpace = {
@@ -114,6 +118,7 @@ class PlayerView extends React.Component {
                 previousState.playerPresent = response.data[0].playerPresent;
                 previousState.playerTurn = response.data[0].playerTurn;
                 previousState.score = response.data[0].score;
+                previousState.gameInProgress = response.data[0].gameInProgress;
                 this.setState(previousState);
             })
     }
@@ -166,6 +171,8 @@ class PlayerView extends React.Component {
                     previousState.remainingTileList = response.data[0].remainingTileList;
                     previousState.playerPresent = response.data[0].playerPresent;
                     previousState.playerTurn = response.data[0].playerTurn;
+                    previousState.score = response.data[0].score;
+                    previousState.gameInProgress = response.data[0].gameInProgress;
                     this.setState(previousState);
                     const playerPresent = previousState.playerPresent;
                     playerPresent.player1 = true;
@@ -220,6 +227,8 @@ class PlayerView extends React.Component {
                     previousState.remainingTileList = response.data[0].remainingTileList;
                     previousState.playerPresent = response.data[0].playerPresent;
                     previousState.playerTurn = response.data[0].playerTurn;
+                    previousState.score = response.data[0].score;
+                    previousState.gameInProgress = response.data[0].gameInProgress;
                     this.setState(previousState);
                     const playerPresent = previousState.playerPresent;
                     playerPresent.player2 = true;
@@ -346,15 +355,86 @@ class PlayerView extends React.Component {
     }
 
     componentDidMount() {
-        
+        const path = this.props.match.path;
+        const player = path.split('/')[2];
         this.joinMatch();
+        setTimeout(this.waitForPlayerTwo, 1000);
+        if (player === "playerTwo") {
+            setTimeout(this.waitForGameStart, 2000);
+        }
     }
 
-    startGame = () => {
+    waitForPlayerTwo = () => {
+        const path = this.props.match.path;
         const player = path.split('/')[2];
-        if (this.state.playerPresent.player1 && this.state.playerPresent.player2) {
-
+        if (player === "playerTwo") {
+            // this.waitForGameStart();
+            return;
         }
+        let waitForPlayerTwoTimer = this.state.waitForPlayerTwoTimer;
+        waitForPlayerTwoTimer = setInterval(() => {
+            console.log("awaiting player 2");
+            this.refreshData();
+            if (this.state.playerPresent.player2) {
+                console.log("player 2 arrived");
+                clearInterval(this.state.waitForPlayerTwoTimer);
+            }
+        }, 2000);
+        this.setState({waitForPlayerTwoTimer: waitForPlayerTwoTimer});
+    }
+
+    waitForTurn = () => {
+        const path = this.props.match.path;
+        const player = path.split('/')[2];
+        let waitForTurnTimer = this.state.waitForTurnTimer;
+        waitForTurnTimer = setInterval(() => {
+            if (player === "playerOne") {
+                if (this.state.playerTurn.player1) {
+                    console.log("your turn!");
+                    clearInterval(this.state.waitForTurnTimer);
+                    return;
+                }
+                console.log("player 2's turn");
+                this.refreshData();
+            }
+            if (player === "playerTwo") {
+                if (this.state.playerTurn.player2) {
+                    console.log("your turn!");
+                    clearInterval(this.state.waitForTurnTimer);
+                    return;
+                }
+                console.log("player 1's turn");
+                this.refreshData();
+            }
+        }, 2000);
+        this.setState({waitForTurnTimer: waitForTurnTimer});
+    }
+
+    waitForGameStart = () => { // for now playerTwo must wait for game start
+        let waitForGameStartTimer = this.state.waitForGameStartTimer;
+        waitForGameStartTimer = setInterval(() => {
+            if (this.state.gameInProgress) {
+                console.log("game has begun!");
+                clearInterval(this.state.waitForGameStartTimer);
+                this.waitForTurn();
+                return;
+            }
+            console.log("waiting for game to start!");
+            this.refreshData();
+        }, 2000);
+        this.setState({waitForGameStartTimer: waitForGameStartTimer});
+    }
+
+    startGame = () => { // for now only playerOne can start game
+        let gameInProgress = this.state.gameInProgress;
+        gameInProgress = true;
+        this.setState({gameInProgress: gameInProgress});
+        const { gameInstanceId } = this.props.match.params;
+        axios.put(`/api/gameInstance/${gameInstanceId}`, {gameInProgress})
+            .then((response) => {
+                console.log(response);
+                this.waitForTurn();
+            })
     }
 
     // submitPlay = () => {
@@ -646,6 +726,11 @@ class PlayerView extends React.Component {
         return (
             <div id="player-view">
                 <h3 id="player-view-header">{this.props.match.path.split('/')[2]}</h3>
+                {
+                    (this.props.match.path.split('/')[2] === "playerOne") ?
+                    <button onClick={this.startGame}>Start Game</button> :
+                    null
+                }
                 {/* <GameBoard gameBoard={this.state.gameData.gameInstance.gameBoard} gameInstanceId={this.state.gameData.gameInstance._id} /> */}
                 {/* <GameBoard gameInstanceId={this.state.gameData.gameInstance._id} /> */}
                 <div id="play-area">

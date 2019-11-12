@@ -344,11 +344,13 @@ class PlayerView extends React.Component {
             let tileElement = document.createElement("div");
             tileElement.setAttribute("class", "tile");
             tileElement.setAttribute("draggable", "true");
-            tileElement.data = 5;
+            tileElement.setAttribute("data-pointValue", tileDrawn.pointValue);
+            tileElement.setAttribute("data-letter", tileDrawn.letter);
             tileElement.innerHTML = tileDrawn.letter;
             tileElement.style.position = "absolute";
             tileElement.style.left = `${355+(i*35)}px`;
             tileElement.style.top = "710.25px";
+            tileElement.addEventListener('dragstart', this.dragStartHandler)
             tileElement.addEventListener('drag', this.dragHandler);
             tileElement.addEventListener('dragend', this.dragStopHandler);
             playAreaElement.appendChild(tileElement);
@@ -457,10 +459,10 @@ class PlayerView extends React.Component {
     // }
     dragStartHandler = (e) => {
         // e.dataTransfer.setData("id", e.target.id);
-        console.log(typeof(e.target.getAttribute("data")));
+        console.log(e.target.getAttribute("data-letter"));
         const tileBeingPlayed = {
-            letter: e.target.innerHTML,
-            pointValue: parseInt(e.target.getAttribute("data"))
+            letter: e.target.getAttribute("data-letter"),
+            pointValue: parseInt(e.target.getAttribute("data-pointValue"))
         };
         // tileInPlay.playingTile = true;
         this.setState({tileBeingPlayed: tileBeingPlayed});
@@ -486,6 +488,8 @@ class PlayerView extends React.Component {
         // const tileInPlay = {...this.state.tileInPlay};
         // tileInPlay.playingTile = false;
         // this.setState({tileInPlay: tileInPlay});
+        const playAreaElement = document.querySelector("#play-area");
+        playAreaElement.removeChild(e.target);
         console.log(this.targetSPace.targetX);
         const gameBoard = [...this.state.gameBoard];
         gameBoard[this.targetSPace.targetX][this.targetSPace.targetY].currentTile = {...this.state.tileBeingPlayed};
@@ -565,7 +569,7 @@ class PlayerView extends React.Component {
                                                     <p>{rowSpace.mType}</p>
                                                 </div> :
                                                 <div className="tile">
-                                                    <p>{rowSpace.currentTile.letter.toUpperCase()}</p>
+                                                    <p>{rowSpace.currentTile.letter}</p>
                                                     <p>{rowSpace.currentTile.pointValue}</p>
                                                 </div>
                                             }
@@ -579,7 +583,7 @@ class PlayerView extends React.Component {
                         <div id="tile-rack" onClick={this.tileRackClickEventHandler}></div>
                         <button onClick={this.drawTiles}>Draw</button>
                     </div>
-                    <p className="tile" data={5} style={{position: 'absolute', left: '849px', top: '662.5px'}} draggable="true" onDragStart={this.dragStartHandler} onDrag={this.dragHandler} onDragEnd={this.dragStopHandler}>T</p>
+                    <p className="tile" data-pointValue={5} data-letter={`T`} style={{position: 'absolute', left: '849px', top: '662.5px'}} draggable="true" onDragStart={this.dragStartHandler} onDrag={this.dragHandler} onDragEnd={this.dragStopHandler}>T</p>
                 </div>
                 <Link to={'/lobby'}><button onClick={this.leaveMatch}>Leave Game</button></Link>
             </div>

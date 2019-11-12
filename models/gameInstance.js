@@ -37,138 +37,138 @@ const nrmSpc = {mult: 1, mType: "normal", currentTile: false}; // normal space
 // tiles
 const tileBlank = {
   letter: "",
-  option: ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"],
-  pointvalue: 0
+  option: ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"],
+  pointValue: 0
 }
 
 const tileA = {
-  letter: "a",
-  pointvalue: 1
+  letter: "A",
+  pointValue: 1
 }
 
 const tileB = {
-  letter: "b",
-  pointvalue: 1
+  letter: "B",
+  pointValue: 1
 }
 
 const tileC = {
-  letter: "c",
-  pointvalue: 3
+  letter: "C",
+  pointValue: 3
 }
 
 const tileD = {
-  letter: "d",
-  pointvalue: 2
+  letter: "D",
+  pointValue: 2
 }
 
 const tileE = {
-  letter: "e",
-  pointvalue: 1
+  letter: "E",
+  pointValue: 1
 }
 
 const tileF = {
-  letter: "f",
-  pointvalue: 4
+  letter: "F",
+  pointValue: 4
 }
 
 const tileG = {
-  letter: "g",
-  pointvalue: 2
+  letter: "G",
+  pointValue: 2
 }
 
 const tileH = {
-  letter: "h",
-  pointvalue: 4
+  letter: "H",
+  pointValue: 4
 }
 
 const tileI = {
-  letter: "i",
-  pointvalue: 1
+  letter: "I",
+  pointValue: 1
 }
 
 const tileJ = {
-  letter: "j",
-  pointvalue: 8
+  letter: "J",
+  pointValue: 8
 }
 
 const tileK = {
-  letter: "k",
-  pointvalue: 5
+  letter: "K",
+  pointValue: 5
 }
 
 const tileL = {
-  letter: "l",
-  pointvalue: 1
+  letter: "L",
+  pointValue: 1
 }
 
 const tileM = {
-  letter: "m",
-  pointvalue: 3
+  letter: "M",
+  pointValue: 3
 }
 
 const tileN = {
-  letter: "n",
-  pointvalue: 1
+  letter: "N",
+  pointValue: 1
 }
 
 const tileO = {
-  letter: "o",
-  pointvalue: 1
+  letter: "O",
+  pointValue: 1
 }
 
 const tileP = {
-  letter: "p",
-  pointvalue: 3
+  letter: "P",
+  pointValue: 3
 }
 
 const tileQ = {
-  letter: "q",
-  pointvalue: 10
+  letter: "Q",
+  pointValue: 10
 }
 
 const tileR = {
-  letter: "r",
-  pointvalue: 1
+  letter: "R",
+  pointValue: 1
 }
 
 const tileS = {
-  letter: "s",
-  pointvalue: 1
+  letter: "S",
+  pointValue: 1
 }
 
 const tileT = {
-  letter: "t",
-  pointvalue: 1
+  letter: "T",
+  pointValue: 1
 }
 
 const tileU = {
-  letter: "u",
-  pointvalue: 1
+  letter: "U",
+  pointValue: 1
 }
 
 const tileV = {
-  letter: "v",
-  pointvalue: 4
+  letter: "V",
+  pointValue: 4
 }
 
 const tileW = {
-  letter: "w",
-  pointvalue: 4
+  letter: "W",
+  pointValue: 4
 }
 
 const tileX = {
-  letter: "x",
-  pointvalue: 8
+  letter: "X",
+  pointValue: 8
 }
 
 const tileY = {
-  letter: "y",
-  pointvalue: 4
+  letter: "Y",
+  pointValue: 4
 }
 
 const tileZ = {
-  letter: "z",
-  pointvalue: 10
+  letter: "Z",
+  pointValue: 10
 }
 
 

@@ -72,14 +72,12 @@ class PlayerView extends React.Component {
         myCurrentTileList: [],
         myPlayer: '',
         currentPlayPointValue: 0,
-        moveTileData: {
-            elXStart: 0,
-            elYStart: 0,
-            mouseXStart: 0,
-            mouseYStart: 0,
-            mouseXEnd: 0,
-            mouseYEnd: 0
-        }
+        tileBeingPlayed: {}
+    }
+
+    targetSPace = {
+        targetX: 0,
+        targetY: 0
     }
 
     refreshData = () => {
@@ -346,6 +344,7 @@ class PlayerView extends React.Component {
             let tileElement = document.createElement("div");
             tileElement.setAttribute("class", "tile");
             tileElement.setAttribute("draggable", "true");
+            tileElement.data = 5;
             tileElement.innerHTML = tileDrawn.letter;
             tileElement.style.position = "absolute";
             tileElement.style.left = `${355+(i*35)}px`;
@@ -363,18 +362,18 @@ class PlayerView extends React.Component {
             })
     }
 
-    spaceEnterEventHandler = (e) => {
-        console.log(e.clientX);
-        console.log(e.target);
-        console.log(e.target.getAttribute("id"));
-        const targetXY = e.target.getAttribute("id").split("-");
-        console.log(targetXY);
-        const targetX = targetXY[0];
-        const targetY = targetXY[1];
-        const targetSpace = this.state.gameBoard[targetX][targetY];
-        console.log(targetSpace);
-        console.log(e.target.getBoundingClientRect());
-    }
+    // spaceEnterEventHandler = (e) => {
+    //     console.log(e.clientX);
+    //     console.log(e.target);
+    //     console.log(e.target.getAttribute("id"));
+    //     const targetXY = e.target.getAttribute("id").split("-");
+    //     console.log(targetXY);
+    //     const targetX = targetXY[0];
+    //     const targetY = targetXY[1];
+    //     const targetSpace = this.state.gameBoard[targetX][targetY];
+    //     console.log(targetSpace);
+    //     console.log(e.target.getBoundingClientRect());
+    // }
 
     tileRackClickEventHandler = (e) => {
         console.log(e.target.getBoundingClientRect());
@@ -406,6 +405,8 @@ class PlayerView extends React.Component {
 
     allowDrop = (e) => {
         e.preventDefault();
+        e.stopPropagation();
+        return false;
     }
 
     // startDragHandler = (e) => {
@@ -454,31 +455,46 @@ class PlayerView extends React.Component {
     //     moveTileData.targetElement.style.top = moveTileData.elYStart+(moveTileData.mouseYEnd-moveTileData.mouseYStart)+'px';
     //     this.setState({moveTileData: moveTileData});
     // }
+    dragStartHandler = (e) => {
+        // e.dataTransfer.setData("id", e.target.id);
+        const tileBeingPlayed = e.target;
+        // tileInPlay.playingTile = true;
+        this.setState({tileBeingPlayed: tileBeingPlayed});
+    }
 
     dragHandler = (e) => {
-        const targetElement = e.target;
+        const tileBeingPlayed = e.target;
         // const elX = parseInt(targetElement.style.left);
         // const elY = parseInt(targetElement.style.top);
         // console.log(e.clientX);
         const mouseX = e.clientX;
         const mouseY = e.clientY;
-        targetElement.style.left = mouseX+'px';
-        targetElement.style.top = mouseY+'px';
+        tileBeingPlayed.style.left = mouseX+'px';
+        tileBeingPlayed.style.top = mouseY+'px';
     }
 
     dragStopHandler = (e) => {
-        console.log(e.clientX);
-        const targetElement = e.target;
+        const tileBeingPlayed = e.target;
         const mouseXEnd = e.clientX;
         const mouseYEnd = e.clientY;
-        targetElement.style.left = mouseXEnd+'px';
-        targetElement.style.top = mouseYEnd+'px';
+        tileBeingPlayed.style.left = mouseXEnd+'px';
+        tileBeingPlayed.style.top = mouseYEnd+'px';
+        // const tileInPlay = {...this.state.tileInPlay};
+        // tileInPlay.playingTile = false;
+        // this.setState({tileInPlay: tileInPlay});
+        console.log(this.targetSPace.targetX);
+        const gameBoard = [...this.state.gameBoard];
+        gameBoard[this.targetSPace.targetX][this.targetSPace.targetY].currentTile = {...this.state.tileBeingPlayed};
+        this.setState({gameBoard: gameBoard});
     }
 
     dropTargetHandler = (e) => {
-        // console.log(e.clientX);
+        console.log(e.clientX);
         // const targetClass = e.target.getAttribute("class").split(" ")[0];
         // console.log(targetClass);
+        // if (this.state.tileInPlay.playingTile) {
+        //     return false;
+        // }
         console.log(e.target.getAttribute("class"));
         if(e.target.getAttribute("class") == null) {
             return false;
@@ -488,12 +504,41 @@ class PlayerView extends React.Component {
         // console.log(targetXY);
         const targetX = targetXY[0];
         const targetY = targetXY[1];
-        const targetSpace = this.state.gameBoard[targetX][targetY];
+        // const targetSpace = this.state.gameBoard[targetX][targetY];
         // console.log(targetSpace);
         // console.log(e.target.getBoundingClientRect());
+        this.targetSPace.targetX = targetX;
+        this.targetSPace.targetY = targetY;
+        console.log(this.targetSPace.targetX);
+        // const gameBoard = [...this.state.gameBoard];
+        // gameBoard[targetX][targetY].currentTile = {...this.state.tileBeingPlayed};
+        // this.targetSPace = {...gameBoard[targetX][targetY]};
+        // this.setState({gameBoard: gameBoard});
     }
 
+    // dropHandler = (e) => {
+    //     e.preventDefault();
+    //     let data = e.dataTransfer.getData("id");
+    //     e.target.appendChild(document.getElementById(data));
+    //     console.log(e.target);
+    //     // if(e.target.getAttribute("class") == null) {
+    //     //     return false;
+    //     // }
+    //     // // console.log(e.target.getAttribute("id"));
+    //     // const targetXY = e.target.getAttribute("id").split("-");
+    //     // // console.log(targetXY);
+    //     // const targetX = targetXY[0];
+    //     // const targetY = targetXY[1];
+    //     // // const targetSpace = this.state.gameBoard[targetX][targetY];
+    //     // // console.log(targetSpace);
+    //     // // console.log(e.target.getBoundingClientRect());
+    //     // const gameBoard = [...this.state.gameBoard];
+    //     // gameBoard[targetX][targetY].currentTile = {...this.state.tileBeingPlayed};
+    //     // this.setState({gameBoard: gameBoard});
+    // }
+
     render() {
+
         return (
             <div id="player-view">
                 <h3 id="player-view-header">{this.props.match.path.split('/')[2]}</h3>
@@ -506,9 +551,9 @@ class PlayerView extends React.Component {
                                 row.map((rowSpace, gridX) => {
                                     return (
                                         <div className={`game-board-space ${rowSpace.mType}-${rowSpace.mult}`} id={`${gridX}-${gridY}`} onDragOver={this.allowDrop} onDragEnter={this.dropTargetHandler}>
-                                            <p>{rowSpace.mult}</p>
+                                            {/* <p>{rowSpace.mult}</p>
                                             <p>{rowSpace.mType}</p>
-                                            <p>{rowSpace.currentTile}</p>
+                                            <p>{rowSpace.currentTile}</p> */}
                                         </div>
                                     )
                                 })
@@ -519,7 +564,7 @@ class PlayerView extends React.Component {
                         <div id="tile-rack" onClick={this.tileRackClickEventHandler}></div>
                         <button onClick={this.drawTiles}>Draw</button>
                     </div>
-                    <div className="tile" style={{position: 'absolute', left: '849px', top: '662.5px'}} draggable="true" onDrag={this.dragHandler} onDragEnd={this.dragStopHandler}></div>
+                    <p className="tile" id="tile-id" style={{position: 'absolute', left: '849px', top: '662.5px'}} draggable="true" onDragStart={this.dragStartHandler} onDrag={this.dragHandler} onDragEnd={this.dragStopHandler}>T</p>
                 </div>
                 <Link to={'/lobby'}><button onClick={this.leaveMatch}>Leave Game</button></Link>
             </div>

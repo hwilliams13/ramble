@@ -26,13 +26,13 @@ const mongoose = require('./connection.js')
  * NOTE: skip this if you are not using mongoose
  *
  */
-const thrWrd = {mult: 3, mType: "word", currentTile: null}; // 3x word score
-const twoWrd = {mult: 2, mType: "word", currentTile: null}; // 2x word score
+const thrWrd = {mult: 3, mType: "word", currentTile: false}; // 3x word score
+const twoWrd = {mult: 2, mType: "word", currentTile: false}; // 2x word score
 
-const thrLet = {mult: 3, mType: "letter", currentTile: null}; // 3x letter score
-const twoLet = {mult: 2, mType: "letter", currentTile: null}; // 2x letter score
+const thrLet = {mult: 3, mType: "letter", currentTile: false}; // 3x letter score
+const twoLet = {mult: 2, mType: "letter", currentTile: false}; // 2x letter score
 
-const nrmSpc = {mult: 1, mType: "normal", currentTile: null}; // normal space
+const nrmSpc = {mult: 1, mType: "normal", currentTile: false}; // normal space
 
 // tiles
 const tileBlank = {

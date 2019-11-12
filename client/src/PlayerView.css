@@ -21,6 +21,7 @@
     width: 602px;
     height: 602px;
     display: flex;
+    flex-direction: column;
     flex-wrap: wrap;
     border: 1px solid #000;
 }

@@ -503,7 +503,7 @@ class PlayerView extends React.Component {
         if(e.target.getAttribute("class") == null) {
             return false;
         }
-        // console.log(e.target.getAttribute("id"));
+        console.log(e.target.getAttribute("id"));
         const targetXY = e.target.getAttribute("id").split("-");
         // console.log(targetXY);
         const targetX = targetXY[0];
@@ -550,14 +550,25 @@ class PlayerView extends React.Component {
                 {/* <GameBoard gameInstanceId={this.state.gameData.gameInstance._id} /> */}
                 <div id="play-area">
                     <div id="game-board">
-                        {this.state.gameBoard.map((row, gridY) => {
+                        {this.state.gameBoard.map((row, gridX) => {
                             return (
-                                row.map((rowSpace, gridX) => {
+                                row.map((rowSpace, gridY) => {
                                     return (
                                         <div className={`game-board-space ${rowSpace.mType}-${rowSpace.mult}`} id={`${gridX}-${gridY}`} onDragOver={this.allowDrop} onDragEnter={this.dropTargetHandler}>
                                             {/* <p>{rowSpace.mult}</p>
                                             <p>{rowSpace.mType}</p>
                                             <p>{rowSpace.currentTile}</p> */}
+                                            {
+                                                !rowSpace.currentTile ? 
+                                                <div className="game-board-space-info">
+                                                    <p>{rowSpace.mult}</p>
+                                                    <p>{rowSpace.mType}</p>
+                                                </div> :
+                                                <div className="tile">
+                                                    <p>{rowSpace.currentTile.letter.toUpperCase()}</p>
+                                                    <p>{rowSpace.currentTile.pointValue}</p>
+                                                </div>
+                                            }
                                         </div>
                                     )
                                 })

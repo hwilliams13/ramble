@@ -437,9 +437,78 @@ class PlayerView extends React.Component {
             })
     }
 
-    // submitPlay = () => {
-    //     if ()
-    // }
+    submitPlay = () => {
+        let wordMult = 1; // initialize word multiplier to be used at end
+        let currentPlayPointValue = 0;
+        if (this.state.currentPlay.end.endX > this.state.currentPlay.start.startX) {
+            let wordlength = this.state.currentPlay.end.endX - this.state.currentPlay.start.startX + 1;
+            for (let i = 0; i < wordlength; i++) {
+                // console.log(this.state.currentPlay.start.startX);
+                // console.log(i);
+                // console.log(this.state.currentPlay.start.startX+i);
+                // console.log(gameBoard[this.state.currentPlay.start.startX + i]);
+                let currentSpace = this.state.gameBoard[this.state.currentPlay.start.startX + i][this.state.currentPlay.start.startY];
+                if (currentSpace.mType === "word") {
+                    wordMult = wordMult * currentSpace.mult;
+                    currentPlayPointValue += currentSpace.currentTile.pointValue;
+                }
+                if (currentSpace.mType === "letter") {
+                    currentPlayPointValue += (currentSpace.mult * currentSpace.currentTile.pointValue);
+                }
+                if (currentSpace.mType === "normal") {
+                    currentPlayPointValue += currentSpace.currentTile.pointValue;
+                }
+            }
+        }
+        if (this.state.currentPlay.end.endY > this.state.currentPlay.start.startY) {
+            let wordlength = this.state.currentPlay.end.endY - this.state.currentPlay.start.startY + 1;
+            for (let i = 0; i < wordlength; i++) {
+                // console.log(this.state.currentPlay.start.startX);
+                // console.log(i);
+                // console.log(this.state.currentPlay.start.startX+i);
+                // console.log(gameBoard[this.state.currentPlay.start.startX + i]);
+                let currentSpace = this.state.gameBoard[this.state.currentPlay.start.startX + i][this.state.currentPlay.start.startY];
+                if (currentSpace.mType === "word") {
+                    wordMult = wordMult * currentSpace.mult;
+                    currentPlayPointValue += currentSpace.currentTile.pointValue;
+                }
+                if (currentSpace.mType === "letter") {
+                    currentPlayPointValue += (currentSpace.mult * currentSpace.currentTile.pointValue);
+                }
+                if (currentSpace.mType === "normal") {
+                    currentPlayPointValue += currentSpace.currentTile.pointValue;
+                }
+            }
+        }
+        currentPlayPointValue = currentPlayPointValue * wordMult;        
+        this.setState({currentPlayPointValue: currentPlayPointValue});
+        const score = {...this.state.score};
+        const playerTurn = {...this.state.playerTurn};
+        const path = this.props.match.path;
+        const player = path.split('/')[2];
+        const { gameInstanceId } = this.props.match.params;
+        if (player === "playerOne") {
+            score.player1 = score.player1 + currentPlayPointValue;
+            playerTurn.player1 = false;
+            playerTurn.player2 = true;
+            this.setState({playerTurn: playerTurn});
+        }
+        else {
+            score.player2 = score.player2 + currentPlayPointValue;
+            playerTurn.player2 = false;
+            playerTurn.player1 = true;
+            this.setState({playerTurn: playerTurn});
+        }
+        axios.put(`/api/gameInstance/${gameInstanceId}`, {score})
+            .then((response) => {
+                console.log(response);
+                axios.put(`/api/gameInstance/${gameInstanceId}`, {playerTurn})
+                    .then((response) => {
+                        console.log(response);
+                        this.waitForTurn();
+                    })
+            })
+    }
 
     drawTiles = () => {
         const { gameInstanceId } = this.props.match.params;
@@ -614,13 +683,14 @@ class PlayerView extends React.Component {
                     currentPlay.end.endX = this.state.targetSpace.targetX;
                     currentPlay.end.endY = this.state.targetSpace.targetY;
                 }
-                if ((this.state.targetSpace.targetX <= currentPlay.lastPlay.lastX) && (this.state.targetSpace.targetY <= currentPlay.lastPlay.lastY)) {
+                if ((this.state.targetSpace.targetX < currentPlay.lastPlay.lastX) && (this.state.targetSpace.targetY <= currentPlay.lastPlay.lastY)) {
                     currentPlay.start.startX = this.state.targetSpace.targetX;
                     currentPlay.start.startY = this.state.targetSpace.targetY;
                 }
                 currentPlay.lastPlay.lastX = this.state.targetSpace.targetX;
                 currentPlay.lastPlay.lastY = this.state.targetSpace.targetY;
                 this.setState({currentPlay: currentPlay});
+                console.log(currentPlay);
             })
     }
 
@@ -655,8 +725,8 @@ class PlayerView extends React.Component {
             console.log(id);
             const targetXY = id.split("-");
             // console.log(targetXY);
-            const targetX = targetXY[0];
-            const targetY = targetXY[1];
+            const targetX = parseInt(targetXY[0]);
+            const targetY = parseInt(targetXY[1]);
             // const targetSpace = this.state.gameBoard[targetX][targetY];
             // console.log(targetSpace);
             // console.log(e.target.getBoundingClientRect());
@@ -762,7 +832,10 @@ class PlayerView extends React.Component {
                     </div>
                     <div id="tile-rack-frame">
                         <div id="tile-rack" onClick={this.tileRackClickEventHandler}></div>
-                        <button onClick={this.drawTiles}>Draw</button>
+                        <div id="game-button-holder">
+                            <button onClick={this.drawTiles}>Draw</button>
+                            <button onClick={this.submitPlay}>Submit Play</button>
+                        </div>
                     </div>
                     {/* <p className="tile" data-point-value={5} data-letter={`T`} style={{position: 'absolute', left: '849px', top: '662.5px'}} draggable="true" onDragStart={this.dragStartHandler} onDrag={this.dragHandler} onDragEnd={this.dragStopHandler}>T</p> */}
                 </div>

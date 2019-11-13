@@ -68,6 +68,10 @@
     background-color: #633306;
 }
 
+#game-button-holder {
+    display: inline;
+}
+
 .tile {
     /* position: absolute; */
     background-color: #b18d5e;

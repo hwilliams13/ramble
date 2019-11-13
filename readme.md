@@ -1,31 +1,52 @@
-# mern-template-project
+# Not-Scrabble PROJECT
+-----------------------------
 
-# Setup A New Project From This Template
+### Overview
 
-If you are starting a new project do the following:
+For Project 3, I created a two player scrabble simulator.
 
-1. copy/download this directory to where you new project is located and rename
-   it to the name of your project.
-1. change your directory (`cd`) into the copied project template
-1. `npm install`
-1. `npm run dev`
-1. Open a new browser window and navigate to the URL http://localhost:3000/
-    here you should see `hello world` displayed after page load
-    updates should show up here automatically
-1. see the `client/src` `readme.md` file for more information on the react project
+The goal was to create an app that allowed multiple two player games to be created and played simultaneously. 
 
-# Setup A New Project Without This Template
+**Play a game [here:](https://not-scrabble.herokuapp.com/)**
 
-If you want to start a project without using this template directory do the
-following:
+-----------------------------
 
+### Technologies Used
 
-1. `mkdir <project-name>`
-1. `cd <project-name>`
-1. `echo "# <project-name>" > readme.md`
-1. `git init`
-1. `git add readme.md `
-1. `git commit -m "init repo with readme.md"`
-1. `npm init`
-1. `mkdir models views controllers`
-1. `touch ./server.js`
+* Languages - CSS3, JS ES6,
+* Frameworks - Node Express, React
+* Database - MongoDB
+* Project Planning - [Github Projects and Issues](https://git.generalassemb.ly/hwilliams13/project-3/projects/1)
+* Editor - VSCode
+
+-----------------------------
+
+### Features
+
+* 1 schema
+    * GameInstance
+* GameInstance stores all information necessary for both players to play against each other (gameBoard state, score, player turn, etc.)
+
+-----------------------------
+
+### Wireframe
+
+![Wireframe](/images/wireframe.jpg)
+
+-----------------------------
+
+### ERD
+
+![ERD](/images/ERD.jpg)
+
+-----------------------------
+
+### Future Development
+
+* Add user login
+* Improve functionality
+    * Make dragging cleaner
+    * Make responsive
+* Increase functionality
+    * Add spellcheck
+    * Add chain scoring

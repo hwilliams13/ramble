@@ -129,39 +129,7 @@ class PlayerView extends React.Component {
         console.log(player);
         const { gameInstanceId } = this.props.match.params;
         if (player === "playerOne") {
-            // const gameInstance = {
-            //     name: this.state.gameInstance.name,
-            //     gameBoard: this.state.gameInstance.gameBoard,
-            //     remainingTileList: this.state.gameInstance.remainingTileList,
-            //     playerPresent: {
-            //         player1: true,
-            //         player2: this.state.gameInstance.playerPresent.player2
-            //     },
-            //     playerTurn: this.state.gameInstance.playerTurn
-            // }
-            // this.setState({gameInstance: gameInstance});
-
-            // axios.get(`/api/gameInstance/${gameInstanceId}`)
-            // .then((response) => {
-            // this.refreshData()
-            //     .then((previousState) => {
-            //         const playerPresent = previousState.playerPresent
-            //         playerPresent.player1 = true;
-            //         axios.put(`/api/gameInstance/${gameInstanceId}`, {playerPresent})
-            //             .then((response) => {
-            //                 console.log(response);
-            //                 this.setState({playerPresent: playerPresent});
-            //             })
-            //     })
-            // axios.put(`/api/gameInstance/${gameInstanceId}`, gameInstance)
-            // .then((response) => {
-            //     console.log(response);
-            // })
-            // axios.put(`/api/gameInstance/${gameInstanceId}`, {playerPresent})
-            //     .then((response) => {
-            //         console.log(response);
-            //         this.refreshData();
-            //     })
+            
             axios.get(`/api/gameInstance/${gameInstanceId}`)
                 .then((response) => {
                     console.log(response.data[0]);
@@ -184,7 +152,7 @@ class PlayerView extends React.Component {
                 })
         }
         if (player === "playerTwo") {
-            
+
              axios.get(`/api/gameInstance/${gameInstanceId}`)
                 .then((response) => {
                     console.log(response.data[0]);

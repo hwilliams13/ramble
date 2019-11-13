@@ -11,6 +11,12 @@ The goal was to create an app that allowed multiple two player games to be creat
 
 -----------------------------
 
+### Purpose
+
+A few years ago, Words With Friends dominated the app scene as the "free version" of scrabble. There were no other clear competitors that I knew of at the time. Also, Words With Friends is only available as a mobile app. I wanted to fix the problem of both not having enough competition and not having an open source version to play from a desktop/laptop. Hopefully there are other people out there with the same desire.
+
+-----------------------------
+
 ### Technologies Used
 
 * Languages - CSS3, JS ES6,

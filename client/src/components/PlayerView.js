@@ -423,14 +423,6 @@ class PlayerView extends React.Component {
         console.log(e.target.getBoundingClientRect());
     }
 
-    // dragHandler = (e, coordX, coordY, offsetX, offsetY) => {
-    //     console.log(e.clientX);
-    //     let targetElement = e.target;
-    //     targetElement.style.left = `${coordX+e.clientX-offsetX}px`;
-    //     targetElement.style.top = `${coordY+e.clientY-offsetY}px`;
-    //     console.log(targetElement.style.left);
-    // }
-
     allowDrop = (e) => {
         e.preventDefault();
     }

@@ -814,12 +814,21 @@ class PlayerView extends React.Component {
 
         return (
             <div id="player-view">
-                <h3 id="player-view-header">{this.props.match.path.split('/')[2]}</h3>
-                {
-                    (this.props.match.path.split('/')[2] === "playerOne") ?
-                    <button onClick={this.startGame}>Start Game</button> :
-                    null
-                }
+                <div id="player-vier-header-box">
+                    <p id="player-view-header">{this.props.match.path.split('/')[2]}</p>
+                    {
+                        (this.props.match.path.split('/')[2] === "playerOne") ?
+                        <button onClick={this.startGame}>Start Game</button> :
+                        null
+                    }
+                    <p>Player 1 Score:{this.state.score.player1}</p>
+                    <p>Player 2 Score:{this.state.score.player2}</p>
+                    <p>Player Turn: {
+                        this.state.playerTurn.player1 ?
+                        "Player 1" :
+                        "Player 2"
+                    }</p>
+                </div>
                 {/* <GameBoard gameBoard={this.state.gameData.gameInstance.gameBoard} gameInstanceId={this.state.gameData.gameInstance._id} /> */}
                 {/* <GameBoard gameInstanceId={this.state.gameData.gameInstance._id} /> */}
                 <div id="play-area">

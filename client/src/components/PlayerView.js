@@ -184,40 +184,7 @@ class PlayerView extends React.Component {
                 })
         }
         if (player === "playerTwo") {
-            // const gameInstance = {
-            //     name: this.state.gameInstance.name,
-            //     gameBoard: this.state.gameInstance.gameBoard,
-            //     remainingTileList: this.state.gameInstance.remainingTileList,
-            //     playerPresent: {
-            //         player1: this.state.gameInstance.playerPresent.player1,
-            //         player2: true
-            //     },
-            //     playerTurn: this.state.gameInstance.playerTurn
-            // }
-            // this.setState({gameInstance: gameInstance});
             
-            // const playerPresent = {...this.state.playerPresent};
-            // playerPresent.player2 = true;
-            // this.setState({playerPresent: playerPresent});
-            // // axios.put(`/api/gameInstance/${gameInstanceId}`, gameInstance)
-            // // .then((response) => {
-            // //     console.log(response);
-            // // })
-            // axios.put(`/api/gameInstance/${gameInstanceId}`, {playerPresent})
-            //     .then((response) => {
-            //         console.log(response);
-            //         this.refreshData();
-            //     })
-            // this.refreshData()
-            //     .then((previousState) => {
-            //         const playerPresent = previousState.playerPresent
-            //         playerPresent.player2 = true;
-            //         axios.put(`/api/gameInstance/${gameInstanceId}`, {playerPresent})
-            //             .then((response) => {
-            //                 console.log(response);
-            //                 this.setState({playerPresent: playerPresent});
-            //             })
-            //     })
              axios.get(`/api/gameInstance/${gameInstanceId}`)
                 .then((response) => {
                     console.log(response.data[0]);
@@ -247,7 +214,7 @@ class PlayerView extends React.Component {
         console.log(player);
         const { gameInstanceId } = this.props.match.params;
         if (player === "playerOne") {
-            
+
             axios.get(`/api/gameInstance/${gameInstanceId}`)
                 .then((response) => {
                     console.log(response.data[0]);

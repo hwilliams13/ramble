@@ -427,18 +427,6 @@ class PlayerView extends React.Component {
         e.preventDefault();
     }
 
-    // startDragHandler = (e) => {
-    //     const targetElement = e.target;
-    //     console.log(typeof(targetElement))
-    //     let elXStart = parseInt(targetElement.style.left);
-    //     let elYStart = parseInt(targetElement.style.top);
-    //     let mouseXStart = e.clientX;
-    //     let mouseYStart = e.clientY;
-    //     console.log(elXStart);
-    //     console.log(mouseXStart);
-    //     this.dragObject(e, elXStart, elYStart, mouseXStart, mouseYStart);
-    // }
-
     // dragObject = (e, elXStart, elYStart, mouseXStart, mouseYStart) => {
         
     //         const targetElement = e.target;

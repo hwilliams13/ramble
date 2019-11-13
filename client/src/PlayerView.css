@@ -4,13 +4,14 @@
 }
 
 #player-view-header-box {
-    display: inline;
-}
-
-#player-view-header {
-    width: 100%;
+    display: flex;
+    justify-content: space-around;
     height: 30px;
 }
+
+/* #player-view-header {
+    height: 30px;
+} */
 
 #play-area {
     width: 100%;

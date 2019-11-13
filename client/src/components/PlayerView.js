@@ -547,7 +547,7 @@ class PlayerView extends React.Component {
                 tileElement.setAttribute("data-letter", tileDrawn.letter);
                 tileElement.setAttribute("data-point-value", tileDrawn.pointValue);
                 tileElement.style.position = "absolute";
-                tileElement.style.left = `${355+(i*35)}px`;
+                tileElement.style.left = `${625+(i*35)}px`;
                 tileElement.style.top = "710.25px";
                 tileElement.addEventListener('dragstart', this.dragStartHandler)
                 tileElement.addEventListener('drag', this.dragHandler);
@@ -814,7 +814,7 @@ class PlayerView extends React.Component {
 
         return (
             <div id="player-view">
-                <div id="player-vier-header-box">
+                <div id="player-view-header-box">
                     <p id="player-view-header">{this.props.match.path.split('/')[2]}</p>
                     {
                         (this.props.match.path.split('/')[2] === "playerOne") ?

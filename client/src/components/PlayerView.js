@@ -423,12 +423,6 @@ class PlayerView extends React.Component {
         console.log(e.target.getBoundingClientRect());
     }
 
-    // clickToMoveHandler = (e) => {
-    //     const targetElement = e.target;
-    //     targetElement.style.left = "800px";
-    //     targetElement.style.top = "600px";
-    // }
-
     // startDragHandler = (e) => {
     //     console.log(e.clientX);
     //     const targetElement = e.target;

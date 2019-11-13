@@ -75,6 +75,7 @@ class PlayerView extends React.Component {
         currentPlayPointValue: 0,
         tileBeingPlayed: {},
         targetSpace: {
+            targetElement: {},
             targetX: 0,
             targetY: 0
         },
@@ -426,7 +427,7 @@ class PlayerView extends React.Component {
     allowDrop = (e) => {
         e.preventDefault();
     }
-    
+
     dragStartHandler = (e) => {
         // e.dataTransfer.setData("id", e.target.id);
         console.log(e.target.getAttribute("data-letter"));
@@ -451,6 +452,7 @@ class PlayerView extends React.Component {
 
     dragStopHandler = (e) => {
         const tileBeingPlayed = e.target;
+        tileBeingPlayed.style.position = "static";
         const mouseXEnd = e.clientX;
         const mouseYEnd = e.clientY;
         tileBeingPlayed.style.left = mouseXEnd+'px';
@@ -458,12 +460,30 @@ class PlayerView extends React.Component {
         // const tileInPlay = {...this.state.tileInPlay};
         // tileInPlay.playingTile = false;
         // this.setState({tileInPlay: tileInPlay});
-        const playAreaElement = document.querySelector("#play-area");
-        this.removeTileFromHand(tileBeingPlayed);
-        playAreaElement.removeChild(e.target);
-        console.log(this.state.targetSpace.targetX);
+        // const playAreaElement = document.querySelector("#play-area");
+        const parentElement = tileBeingPlayed.parentElement;
+        // if (parentElement.get)
         const gameBoard = [...this.state.gameBoard];
+        if (parentElement.getAttribute("class") != null) {
+            const parentSuperClass = parentElement.getAttribute("class");
+            const parentSubClass = parentSuperClass.split(" ")[0];
+            console.log(parentSubClass);
+            
+            if (parentSubClass === "game-board-space") {
+                const parentId = parentElement.getAttribute("id");
+                const targetXY = parentId.split("-");
+                const targetX = parseInt(targetXY[0]);
+                const targetY = parseInt(targetXY[1]);
+                gameBoard[targetX][targetY].currentTile = false;
+            }
+        }
+        this.removeTileFromHand(tileBeingPlayed);
+        // playAreaElement.removeChild(e.target);
+        parentElement.removeChild(tileBeingPlayed);
+        console.log(this.state.targetSpace.targetX);
         gameBoard[this.state.targetSpace.targetX][this.state.targetSpace.targetY].currentTile = {...this.state.tileBeingPlayed};
+        const targetSpace = {...this.state.targetSpace};
+        // targetSpace.targetElement.appendChild(tileBeingPlayed);
         this.setState({gameBoard: gameBoard});
         const { gameInstanceId } = this.props.match.params;
         axios.put(`/api/gameInstance/${gameInstanceId}`, {gameBoard})
@@ -525,6 +545,7 @@ class PlayerView extends React.Component {
             // this.targetSpace.targetY = targetY;
             // console.log(this.targetSpace.targetX);
             const targetSpace = {...this.state.targetSpace};
+            targetSpace.targetElement = e.target;
             targetSpace.targetX = targetX;
             targetSpace.targetY = targetY;
             console.log(targetSpace);
@@ -613,17 +634,28 @@ class PlayerView extends React.Component {
                                             {/* <p>{rowSpace.mult}</p>
                                             <p>{rowSpace.mType}</p>
                                             <p>{rowSpace.currentTile}</p> */}
-                                            {
+                                            {/* {
                                                 !rowSpace.currentTile ? 
                                                 <div className="game-board-space-info">
                                                     <p>{rowSpace.mult}</p>
                                                     <p>{rowSpace.mType}</p>
                                                 </div> :
-                                                <div className="tile">
+                                                <div className="tile" draggable="true" data-letter={rowSpace.currentTile.letter} data-point-value={rowSpace.currentTile.pointValue} onDragStart={this.dragStartHandler} onDrag={this.dragHandler} onDragEnd={this.dragStopHandler}>
                                                     <p>{rowSpace.currentTile.letter}</p>
                                                     <p>{rowSpace.currentTile.pointValue}</p>
                                                 </div>
-                                            }
+                                            } */}
+                                            <div className="game-board-space-info">
+                                                    <p>{
+                                                        !rowSpace.currentTile ?
+                                                        rowSpace.currentTile.letter:
+                                                        rowSpace.mult
+                                                    }</p>
+                                                    <p>{
+                                                        !rowSpace.currentTile ?
+                                                        
+                                                    }</p>
+                                                </div>
                                         </div>
                                     )
                                 })

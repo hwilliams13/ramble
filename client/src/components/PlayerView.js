@@ -97,20 +97,12 @@ class PlayerView extends React.Component {
         waitForGameStartTimer: undefined
     }
 
-    // targetSpace = {
-    //     targetX: 0,
-    //     targetY: 0
-    // }
-
     refreshData = () => {
         const { gameInstanceId } = this.props.match.params;
 
         axios.get(`/api/gameInstance/${gameInstanceId}`)
             .then((response) => {
                 console.log(response.data[0]);
-                // const gameInstance = response.data[0];
-                // console.log(gameInstance);
-                // this.setState({gameInstance: gameInstance});
                 const previousState = {...this.state};
                 previousState.name = response.data[0].name;
                 previousState.gameBoard = response.data[0].gameBoard;
@@ -129,7 +121,7 @@ class PlayerView extends React.Component {
         console.log(player);
         const { gameInstanceId } = this.props.match.params;
         if (player === "playerOne") {
-            
+
             axios.get(`/api/gameInstance/${gameInstanceId}`)
                 .then((response) => {
                     console.log(response.data[0]);

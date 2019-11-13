@@ -426,15 +426,7 @@ class PlayerView extends React.Component {
     allowDrop = (e) => {
         e.preventDefault();
     }
-
-    // dragHandler = (e) => {
-    //     const moveTileData = {...this.state.moveTileData};
-    //     moveTileData.mouseXEnd = e.clientX;
-    //     moveTileData.mouseYEnd = e.clientY;
-    //     moveTileData.targetElement.style.left = moveTileData.elXStart+(moveTileData.mouseXEnd-moveTileData.mouseXStart)+'px';
-    //     moveTileData.targetElement.style.top = moveTileData.elYStart+(moveTileData.mouseYEnd-moveTileData.mouseYStart)+'px';
-    //     this.setState({moveTileData: moveTileData});
-    // }
+    
     dragStartHandler = (e) => {
         // e.dataTransfer.setData("id", e.target.id);
         console.log(e.target.getAttribute("data-letter"));

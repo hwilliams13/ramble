@@ -31,7 +31,7 @@ The goal was to create an app that allowed multiple two player games to be creat
 
 ### Wireframe
 
-![Wireframe](/images/wireframe.jpg)
+![Wireframe](/images/Wireframe.jpg)
 
 -----------------------------
 

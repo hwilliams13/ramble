@@ -478,10 +478,6 @@ class PlayerView extends React.Component {
         if (this.state.currentPlay.end.endY > this.state.currentPlay.start.startY) {
             let wordlength = this.state.currentPlay.end.endY - this.state.currentPlay.start.startY + 1;
             for (let i = 0; i < wordlength; i++) {
-                // console.log(this.state.currentPlay.start.startX);
-                // console.log(i);
-                // console.log(this.state.currentPlay.start.startX+i);
-                // console.log(gameBoard[this.state.currentPlay.start.startX + i]);
                 let currentSpace = this.state.gameBoard[this.state.currentPlay.start.startX][this.state.currentPlay.start.startY+i];
                 if (currentSpace.mType === "word") {
                     wordMult = wordMult * currentSpace.mult;

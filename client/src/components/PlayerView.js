@@ -419,19 +419,6 @@ class PlayerView extends React.Component {
             })
     }
 
-    // spaceEnterEventHandler = (e) => {
-    //     console.log(e.clientX);
-    //     console.log(e.target);
-    //     console.log(e.target.getAttribute("id"));
-    //     const targetXY = e.target.getAttribute("id").split("-");
-    //     console.log(targetXY);
-    //     const targetX = targetXY[0];
-    //     const targetY = targetXY[1];
-    //     const targetSpace = this.state.gameBoard[targetX][targetY];
-    //     console.log(targetSpace);
-    //     console.log(e.target.getBoundingClientRect());
-    // }
-
     tileRackClickEventHandler = (e) => {
         console.log(e.target.getBoundingClientRect());
     }

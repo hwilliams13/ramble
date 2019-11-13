@@ -383,7 +383,26 @@ class PlayerView extends React.Component {
         this.setState({waitForPlayerTwoTimer: waitForPlayerTwoTimer});
     }
 
+    resetCurrentPlay = () => {
+        const currentPlay = {
+            lastPlay: {
+                lastX: 14,
+                lastY: 14
+            },
+            start: {
+                startX: 14,
+                startY: 14
+            },
+            end: {
+                endX: 0,
+                endY: 0
+            }
+        }
+        this.setState({currentPlay: currentPlay});
+    }
+
     waitForTurn = () => {
+        this.resetCurrentPlay();
         const path = this.props.match.path;
         const player = path.split('/')[2];
         let waitForTurnTimer = this.state.waitForTurnTimer;
@@ -467,7 +486,7 @@ class PlayerView extends React.Component {
                 // console.log(i);
                 // console.log(this.state.currentPlay.start.startX+i);
                 // console.log(gameBoard[this.state.currentPlay.start.startX + i]);
-                let currentSpace = this.state.gameBoard[this.state.currentPlay.start.startX + i][this.state.currentPlay.start.startY];
+                let currentSpace = this.state.gameBoard[this.state.currentPlay.start.startX][this.state.currentPlay.start.startY+i];
                 if (currentSpace.mType === "word") {
                     wordMult = wordMult * currentSpace.mult;
                     currentPlayPointValue += currentSpace.currentTile.pointValue;

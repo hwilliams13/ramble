@@ -57,6 +57,10 @@
     background-color: skyblue;
 }
 
+.normal-1 {
+    color: #fff
+}
+
 #tile-rack-frame {
     width: 400px;
     height: 75px;
@@ -80,6 +84,7 @@
 .tile {
     /* position: absolute; */
     background-color: #b18d5e;
+    color: #000;
     width: 30px;
     height: 30px;
     /* left: 849px;

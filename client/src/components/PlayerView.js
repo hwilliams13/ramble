@@ -689,10 +689,11 @@ class PlayerView extends React.Component {
                                             {
                                                 !rowSpace.currentTile ? 
                                                 null :
-                                                <div className="tile" onClick={this.clickHandler} style={{position: 'absolute', left: `${document.getElementById(`${id}`).getBoundingClientRect().left+5}px`, top: `${document.getElementById(`${id}`).getBoundingClientRect().top+5}px`}} draggable="true" dataLetter={rowSpace.currentTile.letter} dataPointValue={rowSpace.currentTile.pointValue} onDragStart={this.dragStartHandler} onDragEnd={this.dragStopHandler}>
-                                                    <p>{rowSpace.currentTile.letter}</p>
-                                                    <p>{rowSpace.currentTile.pointValue}</p>
-                                                </div>
+                                                <Tile onClick={this.clickHandler} style={{position: 'absolute', left: `${document.getElementById(`${id}`).getBoundingClientRect().left+5}px`, top: `${document.getElementById(`${id}`).getBoundingClientRect().top+5}px`}} draggable="true" dataLetter={rowSpace.currentTile.letter} dataPointValue={rowSpace.currentTile.pointValue} onDragStart={this.dragStartHandler} onDragEnd={this.dragStopHandler} />
+                                                // <div className="tile" onClick={this.clickHandler} style={{position: 'absolute', left: `${document.getElementById(`${id}`).getBoundingClientRect().left+5}px`, top: `${document.getElementById(`${id}`).getBoundingClientRect().top+5}px`}} draggable="true" dataLetter={rowSpace.currentTile.letter} dataPointValue={rowSpace.currentTile.pointValue} onDragStart={this.dragStartHandler} onDragEnd={this.dragStopHandler}>
+                                                //     <p>{rowSpace.currentTile.letter}</p>
+                                                //     <p>{rowSpace.currentTile.pointValue}</p>
+                                                // </div>
                                                 // <div className="tile" onClick={this.clickHandler} style={{position: 'absolute', left: `205px`, top: `102.5px`}} draggable="true" dataLetter={rowSpace.currentTile.letter} dataPointValue={rowSpace.currentTile.pointValue} onDragStart={this.dragStartHandler} onDragEnd={this.dragStopHandler}>
                                                 //     <p>{rowSpace.currentTile.letter}</p>
                                                 //     <p>{rowSpace.currentTile.pointValue}</p>

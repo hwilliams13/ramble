@@ -385,13 +385,11 @@ class PlayerView extends React.Component {
     }
 
     dragStartHandler = (e) => {
-        // e.dataTransfer.setData("id", e.target.id);
-        console.log(e.target.getAttribute("dataLetter"));
+        console.log(e.target.getAttribute("dataletter"));
         const tileBeingPlayed = {
-            letter: e.target.getAttribute("dataLetter"),
-            pointValue: parseInt(e.target.getAttribute("dataPointValue"))
+            letter: e.target.getAttribute("dataletter"),
+            pointValue: parseInt(e.target.getAttribute("datapointvalue"))
         };
-        // tileInPlay.playingTile = true;
         this.setState({tileBeingPlayed: tileBeingPlayed});
     }
 
@@ -404,61 +402,6 @@ class PlayerView extends React.Component {
     //     const mouseY = e.clientY;
     //     tileBeingPlayed.style.left = mouseX+'px';
     //     tileBeingPlayed.style.top = mouseY+'px';
-    // }
-
-    // dragStopHandler = (e) => {
-    //     const tileBeingPlayed = e.target;
-    //     tileBeingPlayed.style.position = "static";
-    //     const mouseXEnd = e.clientX;
-    //     const mouseYEnd = e.clientY;
-    //     tileBeingPlayed.style.left = mouseXEnd+'px';
-    //     tileBeingPlayed.style.top = mouseYEnd+'px';
-    //     // const tileInPlay = {...this.state.tileInPlay};
-    //     // tileInPlay.playingTile = false;
-    //     // this.setState({tileInPlay: tileInPlay});
-    //     // const playAreaElement = document.querySelector("#play-area");
-    //     const parentElement = tileBeingPlayed.parentElement;
-    //     // if (parentElement.get)
-    //     const gameBoard = [...this.state.gameBoard];
-    //     if (parentElement.getAttribute("class") != null) {
-    //         const parentSuperClass = parentElement.getAttribute("class");
-    //         const parentSubClass = parentSuperClass.split(" ")[0];
-    //         console.log(parentSubClass);
-            
-    //         if (parentSubClass === "game-board-space") {
-    //             const parentId = parentElement.getAttribute("id");
-    //             const targetXY = parentId.split("-");
-    //             const targetX = parseInt(targetXY[0]);
-    //             const targetY = parseInt(targetXY[1]);
-    //             gameBoard[targetX][targetY].currentTile = false;
-    //         }
-    //     }
-    //     this.removeTileFromHand(tileBeingPlayed);
-    //     // playAreaElement.removeChild(e.target);
-    //     parentElement.removeChild(tileBeingPlayed);
-    //     console.log(this.state.targetSpace.targetX);
-    //     gameBoard[this.state.targetSpace.targetX][this.state.targetSpace.targetY].currentTile = {...this.state.tileBeingPlayed};
-    //     const targetSpace = {...this.state.targetSpace};
-    //     // targetSpace.targetElement.appendChild(tileBeingPlayed);
-    //     this.setState({gameBoard: gameBoard});
-    //     const { gameInstanceId } = this.props.match.params;
-    //     axios.put(`/api/gameInstance/${gameInstanceId}`, {gameBoard})
-    //         .then((response) => {
-    //             console.log(response);
-    //             const currentPlay = {...this.state.currentPlay};
-    //             if ((this.state.targetSpace.targetX >= currentPlay.lastPlay.lastX) && (this.state.targetSpace.targetY >= currentPlay.lastPlay.lastY)) {
-    //                 currentPlay.end.endX = this.state.targetSpace.targetX;
-    //                 currentPlay.end.endY = this.state.targetSpace.targetY;
-    //             }
-    //             if ((this.state.targetSpace.targetX < currentPlay.lastPlay.lastX) && (this.state.targetSpace.targetY <= currentPlay.lastPlay.lastY)) {
-    //                 currentPlay.start.startX = this.state.targetSpace.targetX;
-    //                 currentPlay.start.startY = this.state.targetSpace.targetY;
-    //             }
-    //             currentPlay.lastPlay.lastX = this.state.targetSpace.targetX;
-    //             currentPlay.lastPlay.lastY = this.state.targetSpace.targetY;
-    //             this.setState({currentPlay: currentPlay});
-    //             console.log(currentPlay);
-    //         })
     // }
 
     dragStopHandler = (e) => {
@@ -505,7 +448,7 @@ class PlayerView extends React.Component {
         const myCurrentTileList = [...this.state.myCurrentTileList];
         for (let i = 0; i < myCurrentTileList.length; i++) {
             if (myCurrentTileList[i] != null) {
-                if (myCurrentTileList[i].letter === target.getAttribute("dataLetter")) {
+                if (myCurrentTileList[i].letter === target.getAttribute("dataletter")) {
                     myCurrentTileList[i] = null;
                     this.setState({myCurrentTileList: myCurrentTileList});
                     return;
@@ -555,7 +498,7 @@ class PlayerView extends React.Component {
                                 return (
                                     (tile == null) ?
                                     null :
-                                    <Tile onClick={this.clickHandler} style={{position: 'absolute', left: `${document.getElementById('tile-rack').getBoundingClientRect().left+5+(index*35)}px`, top: `${document.getElementById('tile-rack').getBoundingClientRect().top+5}px`}} draggable="true" dataLetter={tile.letter} dataPointValue={tile.pointValue} onDragStart={this.dragStartHandler} onDragEnd={this.dragStopHandler} />
+                                    <Tile onClick={this.clickHandler} style={{position: 'absolute', left: `${document.getElementById('tile-rack').getBoundingClientRect().left+5+(index*35)}px`, top: `${document.getElementById('tile-rack').getBoundingClientRect().top+5}px`}} draggable="true" dataletter={tile.letter} datapointvalue={tile.pointValue} onDragStart={this.dragStartHandler} onDragEnd={this.dragStopHandler} />
                                 )
                             })}
                         </div>

@@ -8,6 +8,7 @@ import PlayerView from './components/PlayerView.js'
 // CSS files
 import './App.css';
 import './PlayerView.css';
+import './GameBoard.css';
 import './Tile.css';
 
 function App() {

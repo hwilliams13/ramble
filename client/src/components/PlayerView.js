@@ -646,10 +646,9 @@ class PlayerView extends React.Component {
                         "Player 2"
                     }</p>
                 </div>
-                {/* <GameBoard gameBoard={this.state.gameData.gameInstance.gameBoard} gameInstanceId={this.state.gameData.gameInstance._id} /> */}
-                {/* <GameBoard gameInstanceId={this.state.gameData.gameInstance._id} /> */}
                 <div id="play-area">
-                    <div id="game-board">
+                    <GameBoard gameBoard={this.state.gameBoard} allowDrop={this.allowDrop} dropTargetHandler={this.dropTargetHandler} dragStartHandler={this.dragStartHandler} dragStopHandler={this.dragStopHandler} />
+                    {/* <div id="game-board">
                         {this.state.gameBoard.map((row, gridX) => {
                             return (
                                 row.map((rowSpace, gridY) => {
@@ -671,7 +670,7 @@ class PlayerView extends React.Component {
                                 })
                             )
                         })}
-                    </div>
+                    </div> */}
                     <div id="tile-rack-frame">
                         <div id="tile-rack" onClick={this.tileRackClickEventHandler}>
                             {this.state.myCurrentTileList.map((tile, index) => {

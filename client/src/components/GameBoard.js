@@ -17,7 +17,7 @@ class GameBoard extends React.Component {
                             const className = `game-board-space ${rowSpace.mType}-${rowSpace.mult}`;
                             const id = `${gridX}-${gridY}`;
                             return (
-                                <div className={className} id={id} onDragOver={this.allowDrop} onDragEnter={this.dropTargetHandler}>
+                                <div className={className} id={id} onDragOver={this.props.allowDrop} onDragEnter={this.props.dropTargetHandler}>
                                     <div className="game-board-space-info">
                                         <p>{rowSpace.mult}</p>
                                         <p>{rowSpace.mType}</p>
@@ -25,7 +25,7 @@ class GameBoard extends React.Component {
                                     {
                                         !rowSpace.currentTile ? 
                                         null :
-                                        <Tile onClick={this.clickHandler} style={{position: 'absolute', left: `${document.getElementById(`${id}`).getBoundingClientRect().left+5}px`, top: `${document.getElementById(`${id}`).getBoundingClientRect().top+5}px`}} draggable="true" dataLetter={rowSpace.currentTile.letter} dataPointValue={rowSpace.currentTile.pointValue} onDragStart={this.dragStartHandler} onDragEnd={this.dragStopHandler} />
+                                        <Tile style={{position: 'absolute', left: `${document.getElementById(`${id}`).getBoundingClientRect().left+5}px`, top: `${document.getElementById(`${id}`).getBoundingClientRect().top+5}px`}} draggable="true" dataLetter={rowSpace.currentTile.letter} dataPointValue={rowSpace.currentTile.pointValue} onDragStart={this.props.dragStartHandler} onDragEnd={this.props.dragStopHandler} />
                                     }
                                 </div>
                             )

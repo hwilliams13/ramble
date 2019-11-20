@@ -1,11 +1,14 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+// Component files
 import HomePage from './components/HomePage.js'
 import GameLobby from './components/GameLobby.js'
 import GameRoom from './components/GameRoom.js'
 import PlayerView from './components/PlayerView.js'
+// CSS files
 import './App.css';
 import './PlayerView.css';
+import './Tile.css';
 
 function App() {
   return (

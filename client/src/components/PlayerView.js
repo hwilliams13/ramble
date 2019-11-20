@@ -567,64 +567,20 @@ class PlayerView extends React.Component {
 
     dropTargetHandler = (e) => {
         console.log(e.clientX);
-        // const targetClass = e.target.getAttribute("class").split(" ")[0];
-        // console.log(targetClass);
-        // if (this.state.tileInPlay.playingTile) {
-        //     return false;
-        // }
         console.log(e.target.getAttribute("id"));
-        // if(e.target.getAttribute("class") == null) {
-        //     return false;
-        // }
         if(e.target.getAttribute("id") != null) {
             const id = e.target.getAttribute("id");
             console.log(id);
             const targetXY = id.split("-");
-            // console.log(targetXY);
             const targetX = parseInt(targetXY[0]);
             const targetY = parseInt(targetXY[1]);
-            // const targetSpace = this.state.gameBoard[targetX][targetY];
-            // console.log(targetSpace);
-            // console.log(e.target.getBoundingClientRect());
-            // this.targetSpace.targetX = targetX;
-            // this.targetSpace.targetY = targetY;
-            // console.log(this.targetSpace.targetX);
             const targetSpace = {...this.state.targetSpace};
             targetSpace.targetElement = e.target;
             targetSpace.targetX = targetX;
             targetSpace.targetY = targetY;
             console.log(targetSpace);
             this.setState({targetSpace: targetSpace});
-            // const currentPlay = {
-                
-            // }
-            // if ((targetX >= currentPlay.start.startX) && (targetY >= currentPlay.start.startY)) {
-            //     currentPlay.end.endX = targetX;
-            //     currentPlay.end.endY = targetY;
-            // }
-            // if ((targetX <= currentPlay.end.endX) && (targetY <= currentPlay.end.endY)) {
-            //     currentPlay.start.startX = targetX;
-            //     currentPlay.start.startY = targetY;
-            // }
-            // this.setState({currentPlay: currentPlay});
         }
-        // const gameBoard = [...this.state.gameBoard];
-        // gameBoard[targetX][targetY].currentTile = {...this.state.tileBeingPlayed};
-        // this.targetSpace = {...gameBoard[targetX][targetY]};
-        // this.setState({gameBoard: gameBoard});
-    }
-
-    clickHandler = (e) => {
-        console.log(e.target);
-        console.log(e.target.parentElement);
-        // console.log(document.getElementById("0-1"));
-        // // console.log(document.querySelector("#0-1"));
-        // const element = e.target;
-        // console.log(element.getAttribute("id"))
-        // const elementRect = element.getBoundingClientRect();
-        // console.log(elementRect);
-        // const elementRectLeft = elementRect.left;
-        // console.log(elementRectLeft)
     }
 
     render() {
@@ -648,29 +604,6 @@ class PlayerView extends React.Component {
                 </div>
                 <div id="play-area">
                     <GameBoard gameBoard={this.state.gameBoard} allowDrop={this.allowDrop} dropTargetHandler={this.dropTargetHandler} dragStartHandler={this.dragStartHandler} dragStopHandler={this.dragStopHandler} />
-                    {/* <div id="game-board">
-                        {this.state.gameBoard.map((row, gridX) => {
-                            return (
-                                row.map((rowSpace, gridY) => {
-                                    const className = `game-board-space ${rowSpace.mType}-${rowSpace.mult}`;
-                                    const id = `${gridX}-${gridY}`;
-                                    return (
-                                        <div className={className} id={id} onDragOver={this.allowDrop} onDragEnter={this.dropTargetHandler}>
-                                            <div className="game-board-space-info">
-                                                <p>{rowSpace.mult}</p>
-                                                <p>{rowSpace.mType}</p>
-                                            </div>
-                                            {
-                                                !rowSpace.currentTile ? 
-                                                null :
-                                                <Tile onClick={this.clickHandler} style={{position: 'absolute', left: `${document.getElementById(`${id}`).getBoundingClientRect().left+5}px`, top: `${document.getElementById(`${id}`).getBoundingClientRect().top+5}px`}} draggable="true" dataLetter={rowSpace.currentTile.letter} dataPointValue={rowSpace.currentTile.pointValue} onDragStart={this.dragStartHandler} onDragEnd={this.dragStopHandler} />
-                                            }
-                                        </div>
-                                    )
-                                })
-                            )
-                        })}
-                    </div> */}
                     <div id="tile-rack-frame">
                         <div id="tile-rack" onClick={this.tileRackClickEventHandler}>
                             {this.state.myCurrentTileList.map((tile, index) => {

@@ -504,13 +504,10 @@ class PlayerView extends React.Component {
     dragStopHandler = (e) => {
         const tileBeingPlayed = e.target;
         const parentElement = tileBeingPlayed.parentElement;
-        console.log(parentElement);
-        // if (parentElement.get)
         const gameBoard = [...this.state.gameBoard];
         if (parentElement.getAttribute("class") != null) {
             const parentSuperClass = parentElement.getAttribute("class");
             const parentSubClass = parentSuperClass.split(" ")[0];
-            console.log(parentSubClass);
             
             if (parentSubClass === "game-board-space") {
                 const parentId = parentElement.getAttribute("id");
@@ -521,19 +518,14 @@ class PlayerView extends React.Component {
             }
         }
         this.removeTileFromHand(tileBeingPlayed);
-        // playAreaElement.removeChild(e.target);
         if (parentElement.getAttribute("id") === "play-area") {
             parentElement.removeChild(tileBeingPlayed);
         }
-        console.log(this.state.targetSpace.targetX);
         gameBoard[this.state.targetSpace.targetX][this.state.targetSpace.targetY].currentTile = {...this.state.tileBeingPlayed};
-        // const targetSpace = {...this.state.targetSpace};
-        // targetSpace.targetElement.appendChild(tileBeingPlayed);
         this.setState({gameBoard: gameBoard});
         const { gameInstanceId } = this.props.match.params;
         axios.put(`/api/gameInstance/${gameInstanceId}`, {gameBoard})
             .then((response) => {
-                console.log(response);
                 const currentPlay = {...this.state.currentPlay};
                 if ((this.state.targetSpace.targetX >= currentPlay.lastPlay.lastX) && (this.state.targetSpace.targetY >= currentPlay.lastPlay.lastY)) {
                     currentPlay.end.endX = this.state.targetSpace.targetX;
@@ -546,14 +538,11 @@ class PlayerView extends React.Component {
                 currentPlay.lastPlay.lastX = this.state.targetSpace.targetX;
                 currentPlay.lastPlay.lastY = this.state.targetSpace.targetY;
                 this.setState({currentPlay: currentPlay});
-                console.log(currentPlay);
             })
     }
 
     removeTileFromHand = (target) => {
         const myCurrentTileList = [...this.state.myCurrentTileList];
-        // const targetIndex = target.getAttribute("data-index");
-        // myCurrentTileList.splice(targetIndex, 1);
         for (let i = 0; i < myCurrentTileList.length; i++) {
             if (myCurrentTileList[i] != null) {
                 if (myCurrentTileList[i].letter === target.getAttribute("dataLetter")) {
@@ -566,11 +555,8 @@ class PlayerView extends React.Component {
     }
 
     dropTargetHandler = (e) => {
-        console.log(e.clientX);
-        console.log(e.target.getAttribute("id"));
         if(e.target.getAttribute("id") != null) {
             const id = e.target.getAttribute("id");
-            console.log(id);
             const targetXY = id.split("-");
             const targetX = parseInt(targetXY[0]);
             const targetY = parseInt(targetXY[1]);
@@ -578,7 +564,6 @@ class PlayerView extends React.Component {
             targetSpace.targetElement = e.target;
             targetSpace.targetX = targetX;
             targetSpace.targetY = targetY;
-            console.log(targetSpace);
             this.setState({targetSpace: targetSpace});
         }
     }

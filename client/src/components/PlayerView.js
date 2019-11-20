@@ -1,6 +1,8 @@
 import React from 'react';
 
-import Tile from './Tile.js'
+import GameBoard from './GameBoard';
+
+import Tile from './Tile.js';
 
 import axios from 'axios';
 
@@ -11,35 +13,6 @@ import { Link } from 'react-router-dom';
 class PlayerView extends React.Component {
 
     state = {
-        // gameInstance: {
-        //     name: '',
-        //     gameBoard: [
-        //         [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}],
-        //         [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}],
-        //         [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}],
-        //         [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}],
-        //         [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}],
-        //         [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}],
-        //         [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}],
-        //         [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}],
-        //         [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}],
-        //         [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}],
-        //         [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}],
-        //         [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}],
-        //         [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}],
-        //         [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}],
-        //         [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}]
-        //     ],
-        //     remainingTileList: [],
-        //     playerPresent: {
-        //         player1: false,
-        //         player2: false
-        //     },
-        //     playerTurn: {
-        //         player1: false,
-        //         player2: false
-        //     }
-        // },
         name: '',
         gameBoard: [
             [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}],
@@ -695,56 +668,6 @@ class PlayerView extends React.Component {
                                             }
                                         </div>
                                     )
-                                    // return (
-                                    //     <div className={`game-board-space ${rowSpace.mType}-${rowSpace.mult}`} id={`${gridX}-${gridY}`} onDragOver={this.allowDrop} onDragEnter={this.dropTargetHandler}>
-                                    //         {/* <p>{rowSpace.mult}</p>
-                                    //         <p>{rowSpace.mType}</p>
-                                    //         <p>{rowSpace.currentTile}</p> */}
-                                    //         {/* <div className="game-board-space-info">
-                                    //             <p>{rowSpace.mult}</p>
-                                    //             <p>{rowSpace.mType}</p>
-                                    //         </div>
-                                    //         {
-                                    //             !rowSpace.currentTile ? 
-                                    //             null :
-                                    //             <div className="tile" style={{position: 'absolute', left: `${document.querySelector(`#${gridX}-${gridY}`).getBoundingClientRect()}px`, top: '662.5px'}} draggable="true" dataLetter={rowSpace.currentTile.letter} dataPointValue={rowSpace.currentTile.pointValue} onDragStart={this.dragStartHandler} onDragEnd={this.dragStopHandler}>
-                                    //                 <p>{rowSpace.currentTile.letter}</p>
-                                    //                 <p>{rowSpace.currentTile.pointValue}</p>
-                                    //             </div>
-                                    //         } */}
-                                    //         {
-                                    //             !rowSpace.currentTile ? 
-                                    //             <div className="game-board-space-info">
-                                    //                 <p>{rowSpace.mult}</p>
-                                    //                 <p>{rowSpace.mType}</p>
-                                    //             </div> :
-                                    //             <div className="tile" draggable="true" dataLetter={rowSpace.currentTile.letter} dataPointValue={rowSpace.currentTile.pointValue} onDragStart={this.dragStartHandler} onDragEnd={this.dragStopHandler}>
-                                    //                 <p>{rowSpace.currentTile.letter}</p>
-                                    //                 <p>{rowSpace.currentTile.pointValue}</p>
-                                    //             </div>
-                                    //         }
-                                    //         {/* {
-                                    //             !rowSpace.currentTile ? 
-                                    //             <div className="game-board-space-info">
-                                    //                 <p>{rowSpace.mult}</p>
-                                    //                 <p>{rowSpace.mType}</p>
-                                    //             </div> :
-                                    //             <Tile className="tile" draggable="true" dataLetter={rowSpace.currentTile.letter} dataPointValue={rowSpace.currentTile.pointValue} onDragStart={this.dragStartHandler} onDrag={this.dragHandler} onDragEnd={this.dragStopHandler} />
-                                    //         } */}
-                                    //         {/* <div className="game-board-space-info">
-                                    //             <p>{
-                                    //                 !rowSpace.currentTile ?
-                                    //                 rowSpace.currentTile.letter :
-                                    //                 rowSpace.mult
-                                    //             }</p>
-                                    //             <p>{
-                                    //                 !rowSpace.currentTile ?
-                                    //                 rowSpace.currentTile.pointValue :
-                                    //                 rowSpace.mType
-                                    //             }</p>
-                                    //         </div> */}
-                                    //     </div>
-                                    // )
                                 })
                             )
                         })}

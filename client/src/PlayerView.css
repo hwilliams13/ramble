@@ -57,6 +57,10 @@
     background-color: skyblue;
 }
 
+.normal-1 {
+    color: #fff
+}
+
 #tile-rack-frame {
     width: 400px;
     height: 75px;
@@ -67,7 +71,7 @@
 }
 
 #tile-rack {
-    width: 300px;
+    width: 250px;
     height: 40px;
     margin: 5px 0;
     background-color: #633306;
@@ -75,13 +79,4 @@
 
 #game-button-holder {
     display: inline;
-}
-
-.tile {
-    /* position: absolute; */
-    background-color: #b18d5e;
-    width: 30px;
-    height: 30px;
-    /* left: 849px;
-    top: 662.5px; */
 }

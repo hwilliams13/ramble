@@ -1,12 +1,10 @@
 import React from 'react';
 
-import GameBoard from './GameBoard';
+import GameBoard from './GameBoard.js';
 
 import Tile from './Tile.js';
 
 import axios from 'axios';
-
-// import GameBoard from './GameBoard.js'
 
 import { Link } from 'react-router-dom';
 
@@ -94,7 +92,6 @@ class PlayerView extends React.Component {
     joinMatch = () => {
         const path = this.props.match.path;
         const player = path.split('/')[2];
-        console.log(player);
         const { gameInstanceId } = this.props.match.params;
         if (player === "playerOne") {
 
@@ -147,7 +144,6 @@ class PlayerView extends React.Component {
     leaveMatch = () => {
         const path = this.props.match.path;
         const player = path.split('/')[2];
-        console.log(player);
         const { gameInstanceId } = this.props.match.params;
         if (player === "playerOne") {
 
@@ -212,10 +208,10 @@ class PlayerView extends React.Component {
         }
         let waitForPlayerTwoTimer = this.state.waitForPlayerTwoTimer;
         waitForPlayerTwoTimer = setInterval(() => {
-            console.log("awaiting player 2");
+            console.log("awaiting player 2"); // keep for now
             this.refreshData();
             if (this.state.playerPresent.player2) {
-                console.log("player 2 arrived");
+                console.log("player 2 arrived"); // keep for now
                 clearInterval(this.state.waitForPlayerTwoTimer);
             }
         }, 2000);
@@ -248,20 +244,20 @@ class PlayerView extends React.Component {
         waitForTurnTimer = setInterval(() => {
             if (player === "playerOne") {
                 if (this.state.playerTurn.player1) {
-                    console.log("your turn!");
+                    console.log("your turn!"); // keep for now
                     clearInterval(this.state.waitForTurnTimer);
                     return;
                 }
-                console.log("player 2's turn");
+                console.log("player 2's turn"); // keep for now
                 this.refreshData();
             }
             if (player === "playerTwo") {
                 if (this.state.playerTurn.player2) {
-                    console.log("your turn!");
+                    console.log("your turn!"); // keep for now
                     clearInterval(this.state.waitForTurnTimer);
                     return;
                 }
-                console.log("player 1's turn");
+                console.log("player 1's turn"); // keep for now
                 this.refreshData();
             }
         }, 2000);
@@ -272,12 +268,12 @@ class PlayerView extends React.Component {
         let waitForGameStartTimer = this.state.waitForGameStartTimer;
         waitForGameStartTimer = setInterval(() => {
             if (this.state.gameInProgress) {
-                console.log("game has begun!");
+                console.log("game has begun!"); // keep for now
                 clearInterval(this.state.waitForGameStartTimer);
                 this.waitForTurn();
                 return;
             }
-            console.log("waiting for game to start!");
+            console.log("waiting for game to start!"); // keep for now
             this.refreshData();
         }, 2000);
         this.setState({waitForGameStartTimer: waitForGameStartTimer});
@@ -359,42 +355,6 @@ class PlayerView extends React.Component {
                     })
             })
     }
-
-    // drawTiles = () => {
-    //     const { gameInstanceId } = this.props.match.params;
-    //     const myCurrentTileList = [...this.state.myCurrentTileList];
-    //     const remainingTileList = [...this.state.remainingTileList];
-    //     const playAreaElement = document.querySelector("#play-area")
-    //     for (let i = 0; i < 7; i++) {
-    //         let remainingTileAmount = remainingTileList.length;
-    //         if (myCurrentTileList[i] == null) {
-    //             let tileDrawn = remainingTileList.splice((Math.floor(Math.random()*remainingTileAmount)), 1)[0];
-    //             myCurrentTileList[i] = {...tileDrawn};
-    //             let tileElement = document.createElement("div");
-    //             tileElement.setAttribute("class", "tile");
-    //             tileElement.setAttribute("draggable", "true");
-    //             tileElement.setAttribute("data-index", i)
-    //             tileElement.innerHTML = tileDrawn.letter;
-    //             tileElement.setAttribute("dataLetter", tileDrawn.letter);
-    //             tileElement.setAttribute("dataPointValue", tileDrawn.pointValue);
-    //             tileElement.style.position = "absolute";
-    //             tileElement.style.left = `${625+(i*35)}px`;
-    //             tileElement.style.top = "710.25px";
-    //             tileElement.addEventListener('dragstart', this.dragStartHandler)
-    //             // tileElement.addEventListener('drag', this.dragHandler);
-    //             tileElement.addEventListener('click', this.clickHandler);
-    //             tileElement.addEventListener('dragend', this.dragStopHandler);
-    //             playAreaElement.appendChild(tileElement);
-    //         }
-    //     }
-
-    //     this.setState({myCurrentTileList: myCurrentTileList});
-    //     axios.put(`/api/gameInstance/${gameInstanceId}`, {remainingTileList})
-    //         .then((response) => {
-    //             console.log(response);
-    //             this.setState({remainingTileList: remainingTileList});
-    //         })
-    // }
 
     drawTiles = () => {
         const { gameInstanceId } = this.props.match.params;

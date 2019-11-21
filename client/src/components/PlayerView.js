@@ -291,6 +291,29 @@ class PlayerView extends React.Component {
             })
     }
 
+    // checkForHookWord = (currentSpace) => {
+    //     if()
+    // }
+
+    computeWordValue = (startingSpace, endingSpace) => {
+        let wordMult = 1; // initialize word multiplier to be used at end
+        let currentPlayPointValue = 0;
+        let wordlength = this.state.currentPlay.end.endX - this.state.currentPlay.start.startX + 1;
+            for (let i = 0; i < wordlength; i++) {
+                let currentSpace = this.state.gameBoard[this.state.currentPlay.start.startX + i][this.state.currentPlay.start.startY];
+                if (currentSpace.mType === "word") {
+                    wordMult = wordMult * currentSpace.mult;
+                    currentPlayPointValue += currentSpace.currentTile.pointValue;
+                }
+                if (currentSpace.mType === "letter") {
+                    currentPlayPointValue += (currentSpace.mult * currentSpace.currentTile.pointValue);
+                }
+                if (currentSpace.mType === "normal") {
+                    currentPlayPointValue += currentSpace.currentTile.pointValue;
+                }
+            }
+    }
+
     submitPlay = () => {
         let wordMult = 1; // initialize word multiplier to be used at end
         let currentPlayPointValue = 0;
@@ -464,7 +487,7 @@ class PlayerView extends React.Component {
             const targetX = parseInt(targetXY[0]);
             const targetY = parseInt(targetXY[1]);
             const targetSpace = {...this.state.targetSpace};
-            targetSpace.targetElement = e.target;
+            // targetSpace.targetElement = e.target;
             targetSpace.targetX = targetX;
             targetSpace.targetY = targetY;
             this.setState({targetSpace: targetSpace});

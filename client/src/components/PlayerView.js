@@ -52,18 +52,32 @@ class PlayerView extends React.Component {
             targetX: 0,
             targetY: 0
         },
+        // currentPlay: {
+        //     lastPlay: {
+        //         lastX: 14,
+        //         lastY: 14
+        //     },
+        //     start: {
+        //         startX: 14,
+        //         startY: 14
+        //     },
+        //     end: {
+        //         endX: 0,
+        //         endY: 0
+        //     }
+        // },
         currentPlay: {
             lastPlay: {
-                lastX: 14,
-                lastY: 14
+                lastX: undefined,
+                lastY: undefined
             },
             start: {
-                startX: 14,
-                startY: 14
+                startX: undefined,
+                startY: undefined
             },
             end: {
-                endX: 0,
-                endY: 0
+                endX: undefined,
+                endY: undefined
             }
         },
         waitForPlayerTwoTimer: undefined,
@@ -218,19 +232,37 @@ class PlayerView extends React.Component {
         this.setState({waitForPlayerTwoTimer: waitForPlayerTwoTimer});
     }
 
+    // resetCurrentPlay = () => {
+    //     const currentPlay = {
+    //         lastPlay: {
+    //             lastX: 14,
+    //             lastY: 14
+    //         },
+    //         start: {
+    //             startX: 14,
+    //             startY: 14
+    //         },
+    //         end: {
+    //             endX: 0,
+    //             endY: 0
+    //         }
+    //     }
+    //     this.setState({currentPlay: currentPlay});
+    // }
+
     resetCurrentPlay = () => {
         const currentPlay = {
             lastPlay: {
-                lastX: 14,
-                lastY: 14
+                lastX: undefined,
+                lastY: undefined
             },
             start: {
-                startX: 14,
-                startY: 14
+                startX: undefined,
+                startY: undefined
             },
             end: {
-                endX: 0,
-                endY: 0
+                endX: undefined,
+                endY: undefined
             }
         }
         this.setState({currentPlay: currentPlay});
@@ -452,19 +484,45 @@ class PlayerView extends React.Component {
         const { gameInstanceId } = this.props.match.params;
         axios.put(`/api/gameInstance/${gameInstanceId}`, {gameBoard})
             .then((response) => {
-                const currentPlay = {...this.state.currentPlay};
-                if ((this.state.targetSpace.targetX >= currentPlay.lastPlay.lastX) && (this.state.targetSpace.targetY >= currentPlay.lastPlay.lastY)) {
-                    currentPlay.end.endX = this.state.targetSpace.targetX;
-                    currentPlay.end.endY = this.state.targetSpace.targetY;
-                }
-                if ((this.state.targetSpace.targetX < currentPlay.lastPlay.lastX) && (this.state.targetSpace.targetY <= currentPlay.lastPlay.lastY)) {
-                    currentPlay.start.startX = this.state.targetSpace.targetX;
-                    currentPlay.start.startY = this.state.targetSpace.targetY;
-                }
-                currentPlay.lastPlay.lastX = this.state.targetSpace.targetX;
-                currentPlay.lastPlay.lastY = this.state.targetSpace.targetY;
-                this.setState({currentPlay: currentPlay});
+                // const currentPlay = {...this.state.currentPlay};
+                // if ((this.state.targetSpace.targetX >= currentPlay.lastPlay.lastX) && (this.state.targetSpace.targetY >= currentPlay.lastPlay.lastY)) {
+                //     currentPlay.end.endX = this.state.targetSpace.targetX;
+                //     currentPlay.end.endY = this.state.targetSpace.targetY;
+                // }
+                // if ((this.state.targetSpace.targetX < currentPlay.lastPlay.lastX) && (this.state.targetSpace.targetY <= currentPlay.lastPlay.lastY)) {
+                //     currentPlay.start.startX = this.state.targetSpace.targetX;
+                //     currentPlay.start.startY = this.state.targetSpace.targetY;
+                // }
+                // currentPlay.lastPlay.lastX = this.state.targetSpace.targetX;
+                // currentPlay.lastPlay.lastY = this.state.targetSpace.targetY;
+                // this.setState({currentPlay: currentPlay});
+                this.trackCurrentPlay();
             })
+    }
+
+    trackCurrentPlay = () => {
+        const currentPlay = {...this.state.currentPlay};
+        // if ((this.state.targetSpace.targetX >= currentPlay.lastPlay.lastX) && (this.state.targetSpace.targetY >= currentPlay.lastPlay.lastY)) {
+        //     currentPlay.end.endX = this.state.targetSpace.targetX;
+        //     currentPlay.end.endY = this.state.targetSpace.targetY;
+        // }
+        // if ((this.state.targetSpace.targetX < currentPlay.lastPlay.lastX) && (this.state.targetSpace.targetY <= currentPlay.lastPlay.lastY)) {
+        //     currentPlay.start.startX = this.state.targetSpace.targetX;
+        //     currentPlay.start.startY = this.state.targetSpace.targetY;
+        // }
+        // currentPlay.lastPlay.lastX = this.state.targetSpace.targetX;
+        // currentPlay.lastPlay.lastY = this.state.targetSpace.targetY;
+        if (currentPlay.start.startX === undefined) {
+            currentPlay.start.startX = this.state.targetSpace.targetX;
+            currentPlay.start.startY = this.state.targetSpace.targetY;
+        }
+        if ((this.state.targetSpace.targetX >= currentPlay.start.startX) && (this.state.targetSpace.targetY >= currentPlay.start.startY)) {
+            currentPlay.end.endX = this.state.targetSpace.targetX;
+            currentPlay.end.endY = this.state.targetSpace.targetY;
+        }
+        currentPlay.lastPlay.lastX = this.state.targetSpace.targetX;
+        currentPlay.lastPlay.lastY = this.state.targetSpace.targetY;
+        this.setState({currentPlay: currentPlay});
     }
 
     removeTileFromHand = (target) => {

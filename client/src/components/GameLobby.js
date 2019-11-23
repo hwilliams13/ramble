@@ -39,6 +39,7 @@ class GameLobby extends React.Component {
         }
         axios.post('/api/gameInstance', newGame)
             .then((response) => {
+                console.log(response);
                 const availableGameList = [...this.state.availableGameList];
                 availableGameList.push(response.data);
                 this.setState({availableGameList: availableGameList});

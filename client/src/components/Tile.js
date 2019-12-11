@@ -5,15 +5,15 @@ class Tile extends React.Component {
     render() {
         
         return (
-            <div className="tile" draggable="true" onClick={this.props.onClick} style={this.props.style} dataLetter={this.props.dataLetter} dataPointValue={this.props.dataPointValue} onDragStart={this.props.onDragStart} onDragEnd={this.props.onDragEnd}>
+            <div className="tile" draggable="true" onClick={this.props.onClick} style={this.props.style} dataletter={this.props.dataletter} datapointvalue={this.props.datapointvalue} onDragStart={this.props.onDragStart} onDragEnd={this.props.onDragEnd}>
                 <p>
                     {
-                        (this.props.dataLetter === '') ?
+                        (this.props.dataletter === '') ?
                         ' ' :
-                        this.props.dataLetter
+                        this.props.dataletter
                     }
                 </p>
-                <p>{this.props.dataPointValue}</p>
+                <p>{this.props.datapointvalue}</p>
             </div>
         )
     }

@@ -45,6 +45,9 @@ class HomePage extends React.Component {
     render() {
         return (
             <div>
+                <h3>Version Notes</h3>
+                <p>-Currently no spellchecker</p>
+                <p>-Refreshing the page will cause you to lose any unplayed tiles</p>
                 <h3>Rules!</h3>
                 <p>It's Scrabble but not!</p>
                 <h3>Lobby</h3>

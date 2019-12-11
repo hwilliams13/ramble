@@ -260,6 +260,16 @@ const GameInstanceSchema = new mongoose.Schema({
   player2: {
    type: Number,
    default: 0
+  },
+  myCurrentTileList: {
+    player1: {
+      type: Array,
+      default: []
+    },
+    player2: {
+      type: Array,
+      default: []
+    }
   }
  },
  gameInProgress: {

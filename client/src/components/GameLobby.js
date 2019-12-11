@@ -39,6 +39,7 @@ class GameLobby extends React.Component {
         }
         axios.post('/api/gameInstance', newGame)
             .then((response) => {
+                console.log(response);
                 const availableGameList = [...this.state.availableGameList];
                 availableGameList.push(response.data);
                 this.setState({availableGameList: availableGameList});
@@ -69,20 +70,23 @@ class GameLobby extends React.Component {
                 {this.state.availableGameList.map((game, key) => {
                     return (
                         <div>
-                            <Link to={
-                                (game.playerPresent.player1 && game.playerPresent.player2) ?
-                                `/lobby/${game._id}` :
-                                (
-                                    game.playerPresent.player1 ?
-                                    `/lobby/playerTwo/${game._id}` :
-                                    `/lobby/playerOne/${game._id}`
-                                )
-                                }>
-                                    <GameLobbyGameItem gameData={game} />
-                            </Link>
-                            <button onClick={() => {
-                                this.deleteGame(game._id, key);
-                            }}>Delete Game</button>
+                            <p>{key+1}</p>
+                            <div>
+                                <Link to={
+                                    (game.playerPresent.player1 && game.playerPresent.player2) ?
+                                    `/lobby/${game._id}` :
+                                    (
+                                        game.playerPresent.player1 ?
+                                        `/lobby/playerTwo/${game._id}` :
+                                        `/lobby/playerOne/${game._id}`
+                                    )
+                                    }>
+                                        <GameLobbyGameItem gameData={game} />
+                                </Link>
+                                <button onClick={() => {
+                                    this.deleteGame(game._id, key);
+                                }}>Delete Game</button>
+                            </div>
                         </div>
                     )
                 })}

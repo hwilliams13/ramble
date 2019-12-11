@@ -207,7 +207,7 @@ class PlayerView extends React.Component {
         const path = this.props.match.path;
         const player = path.split('/')[2];
         this.joinMatch();
-        // setTimeout(this.waitForPlayerTwo, 1000);
+        setTimeout(this.waitForPlayerTwo, 1000);
         if (player === "playerTwo") {
             setTimeout(this.waitForGameStart, 2000);
         }
@@ -217,15 +217,17 @@ class PlayerView extends React.Component {
         const path = this.props.match.path;
         const player = path.split('/')[2];
         if (player === "playerTwo") {
-            // this.waitForGameStart();
+            this.waitForGameStart();
             return;
         }
         let waitForPlayerTwoTimer = this.state.waitForPlayerTwoTimer;
+        alert("awaiting player 2");
         waitForPlayerTwoTimer = setInterval(() => {
             console.log("awaiting player 2"); // keep for now
             this.refreshData();
             if (this.state.playerPresent.player2) {
                 console.log("player 2 arrived"); // keep for now
+                alert("player 2 arrived");
                 clearInterval(this.state.waitForPlayerTwoTimer);
             }
         }, 2000);
@@ -277,6 +279,7 @@ class PlayerView extends React.Component {
             if (player === "playerOne") {
                 if (this.state.playerTurn.player1) {
                     console.log("your turn!"); // keep for now
+                    alert("your turn!");
                     clearInterval(this.state.waitForTurnTimer);
                     return;
                 }
@@ -286,6 +289,7 @@ class PlayerView extends React.Component {
             if (player === "playerTwo") {
                 if (this.state.playerTurn.player2) {
                     console.log("your turn!"); // keep for now
+                    alert("your turn");
                     clearInterval(this.state.waitForTurnTimer);
                     return;
                 }
@@ -301,6 +305,7 @@ class PlayerView extends React.Component {
         waitForGameStartTimer = setInterval(() => {
             if (this.state.gameInProgress) {
                 console.log("game has begun!"); // keep for now
+                alert("game has begun!");
                 clearInterval(this.state.waitForGameStartTimer);
                 this.waitForTurn();
                 return;
@@ -327,24 +332,24 @@ class PlayerView extends React.Component {
     //     if()
     // }
 
-    computeWordValue = (startingSpace, endingSpace) => {
-        let wordMult = 1; // initialize word multiplier to be used at end
-        let currentPlayPointValue = 0;
-        let wordlength = this.state.currentPlay.end.endX - this.state.currentPlay.start.startX + 1;
-            for (let i = 0; i < wordlength; i++) {
-                let currentSpace = this.state.gameBoard[this.state.currentPlay.start.startX + i][this.state.currentPlay.start.startY];
-                if (currentSpace.mType === "word") {
-                    wordMult = wordMult * currentSpace.mult;
-                    currentPlayPointValue += currentSpace.currentTile.pointValue;
-                }
-                if (currentSpace.mType === "letter") {
-                    currentPlayPointValue += (currentSpace.mult * currentSpace.currentTile.pointValue);
-                }
-                if (currentSpace.mType === "normal") {
-                    currentPlayPointValue += currentSpace.currentTile.pointValue;
-                }
-            }
-    }
+    // computeWordValue = (startingSpace, endingSpace) => {
+    //     let wordMult = 1; // initialize word multiplier to be used at end
+    //     let currentPlayPointValue = 0;
+    //     let wordlength = this.state.currentPlay.end.endX - this.state.currentPlay.start.startX + 1;
+    //         for (let i = 0; i < wordlength; i++) {
+    //             let currentSpace = this.state.gameBoard[this.state.currentPlay.start.startX + i][this.state.currentPlay.start.startY];
+    //             if (currentSpace.mType === "word") {
+    //                 wordMult = wordMult * currentSpace.mult;
+    //                 currentPlayPointValue += currentSpace.currentTile.pointValue;
+    //             }
+    //             if (currentSpace.mType === "letter") {
+    //                 currentPlayPointValue += (currentSpace.mult * currentSpace.currentTile.pointValue);
+    //             }
+    //             if (currentSpace.mType === "normal") {
+    //                 currentPlayPointValue += currentSpace.currentTile.pointValue;
+    //             }
+    //         }
+    // }
 
     submitPlay = () => {
         let wordMult = 1; // initialize word multiplier to be used at end

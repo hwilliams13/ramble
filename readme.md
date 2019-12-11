@@ -1,9 +1,9 @@
-# Not-Scrabble PROJECT
+# Ramble PROJECT
 -----------------------------
 
 ### Overview
 
-For Project 3, I created a two player scrabble simulator.
+For Project 3, I created a two player scrabble emulator.
 
 The goal was to create an app that allowed multiple two player games to be created and played simultaneously. 
 

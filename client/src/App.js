@@ -14,7 +14,7 @@ import './Tile.css';
 function App() {
   return (
     <div className="App">
-      <h1 id="nav-bar">Scrabble!</h1>
+      <h1 id="nav-bar">Ramble!</h1>
       <div id="main-body">
         <Router>
           <Switch>

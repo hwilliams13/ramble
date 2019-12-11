@@ -279,7 +279,7 @@ class PlayerView extends React.Component {
             if (player === "playerOne") {
                 if (this.state.playerTurn.player1) {
                     console.log("your turn!"); // keep for now
-                    alert("your turn!");
+                    // alert("your turn!");
                     clearInterval(this.state.waitForTurnTimer);
                     return;
                 }
@@ -289,7 +289,7 @@ class PlayerView extends React.Component {
             if (player === "playerTwo") {
                 if (this.state.playerTurn.player2) {
                     console.log("your turn!"); // keep for now
-                    alert("your turn");
+                    // alert("your turn");
                     clearInterval(this.state.waitForTurnTimer);
                     return;
                 }
@@ -305,7 +305,7 @@ class PlayerView extends React.Component {
         waitForGameStartTimer = setInterval(() => {
             if (this.state.gameInProgress) {
                 console.log("game has begun!"); // keep for now
-                alert("game has begun!");
+                // alert("game has begun!");
                 clearInterval(this.state.waitForGameStartTimer);
                 this.waitForTurn();
                 return;

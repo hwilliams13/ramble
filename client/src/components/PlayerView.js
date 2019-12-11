@@ -90,7 +90,7 @@ class PlayerView extends React.Component {
 
         axios.get(`/api/gameInstance/${gameInstanceId}`)
             .then((response) => {
-                console.log(response.data[0]);
+                // console.log(response.data[0]);
                 const previousState = {...this.state};
                 previousState.name = response.data[0].name;
                 previousState.gameBoard = response.data[0].gameBoard;

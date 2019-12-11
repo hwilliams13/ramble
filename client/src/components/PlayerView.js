@@ -234,41 +234,41 @@ class PlayerView extends React.Component {
         this.setState({waitForPlayerTwoTimer: waitForPlayerTwoTimer});
     }
 
-    // resetCurrentPlay = () => {
-    //     const currentPlay = {
-    //         lastPlay: {
-    //             lastX: 14,
-    //             lastY: 14
-    //         },
-    //         start: {
-    //             startX: 14,
-    //             startY: 14
-    //         },
-    //         end: {
-    //             endX: 0,
-    //             endY: 0
-    //         }
-    //     }
-    //     this.setState({currentPlay: currentPlay});
-    // }
-
     resetCurrentPlay = () => {
         const currentPlay = {
             lastPlay: {
-                lastX: undefined,
-                lastY: undefined
+                lastX: 14,
+                lastY: 14
             },
             start: {
-                startX: undefined,
-                startY: undefined
+                startX: 14,
+                startY: 14
             },
             end: {
-                endX: undefined,
-                endY: undefined
+                endX: 0,
+                endY: 0
             }
         }
         this.setState({currentPlay: currentPlay});
     }
+
+    // resetCurrentPlay = () => {
+    //     const currentPlay = {
+    //         lastPlay: {
+    //             lastX: undefined,
+    //             lastY: undefined
+    //         },
+    //         start: {
+    //             startX: undefined,
+    //             startY: undefined
+    //         },
+    //         end: {
+    //             endX: undefined,
+    //             endY: undefined
+    //         }
+    //     }
+    //     this.setState({currentPlay: currentPlay});
+    // }
 
     waitForTurn = () => {
         this.resetCurrentPlay();

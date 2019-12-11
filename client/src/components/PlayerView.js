@@ -52,34 +52,34 @@ class PlayerView extends React.Component {
             targetX: 0,
             targetY: 0
         },
-        // currentPlay: {
-        //     lastPlay: {
-        //         lastX: 14,
-        //         lastY: 14
-        //     },
-        //     start: {
-        //         startX: 14,
-        //         startY: 14
-        //     },
-        //     end: {
-        //         endX: 0,
-        //         endY: 0
-        //     }
-        // },
         currentPlay: {
             lastPlay: {
-                lastX: undefined,
-                lastY: undefined
+                lastX: 14,
+                lastY: 14
             },
             start: {
-                startX: undefined,
-                startY: undefined
+                startX: 14,
+                startY: 14
             },
             end: {
-                endX: undefined,
-                endY: undefined
+                endX: 0,
+                endY: 0
             }
         },
+        // currentPlay: {
+        //     lastPlay: {
+        //         lastX: undefined,
+        //         lastY: undefined
+        //     },
+        //     start: {
+        //         startX: undefined,
+        //         startY: undefined
+        //     },
+        //     end: {
+        //         endX: undefined,
+        //         endY: undefined
+        //     }
+        // },
         waitForPlayerTwoTimer: undefined,
         waitForTurnTimer: undefined,
         waitForGameStartTimer: undefined

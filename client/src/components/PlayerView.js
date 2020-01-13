@@ -164,19 +164,20 @@ class PlayerView extends React.Component {
             axios.get(`/api/gameInstance/${gameInstanceId}`)
                 .then((response) => {
                     console.log(response.data[0]);
-                    const previousState = {...this.state};
-                    previousState.name = response.data[0].name;
-                    previousState.gameBoard = response.data[0].gameBoard;
-                    previousState.remainingTileList = response.data[0].remainingTileList;
-                    previousState.playerPresent = response.data[0].playerPresent;
-                    previousState.playerTurn = response.data[0].playerTurn;
-                    this.setState(previousState);
-                    const playerPresent = previousState.playerPresent;
+                    // const previousState = {...this.state};
+                    // previousState.name = response.data[0].name;
+                    // previousState.gameBoard = response.data[0].gameBoard;
+                    // previousState.remainingTileList = response.data[0].remainingTileList;
+                    // previousState.playerPresent = response.data[0].playerPresent;
+                    // previousState.playerTurn = response.data[0].playerTurn;
+                    // this.setState(previousState);
+                    // const playerPresent = previousState.playerPresent;
+                    const playerPresent = {...this.state.playerPresent};
                     playerPresent.player1 = false;
                     axios.put(`/api/gameInstance/${gameInstanceId}`, {playerPresent})
                         .then((response) => {
                             console.log(response);
-                            this.setState({playerPresent: playerPresent});
+                            // this.setState({playerPresent: playerPresent});
                         })
                 })
         }
@@ -185,32 +186,33 @@ class PlayerView extends React.Component {
             axios.get(`/api/gameInstance/${gameInstanceId}`)
                 .then((response) => {
                     console.log(response.data[0]);
-                    const previousState = {...this.state};
-                    previousState.name = response.data[0].name;
-                    previousState.gameBoard = response.data[0].gameBoard;
-                    previousState.remainingTileList = response.data[0].remainingTileList;
-                    previousState.playerPresent = response.data[0].playerPresent;
-                    previousState.playerTurn = response.data[0].playerTurn;
-                    this.setState(previousState);
-                    const playerPresent = previousState.playerPresent;
+                    // const previousState = {...this.state};
+                    // previousState.name = response.data[0].name;
+                    // previousState.gameBoard = response.data[0].gameBoard;
+                    // previousState.remainingTileList = response.data[0].remainingTileList;
+                    // previousState.playerPresent = response.data[0].playerPresent;
+                    // previousState.playerTurn = response.data[0].playerTurn;
+                    // this.setState(previousState);
+                    // const playerPresent = previousState.playerPresent;
+                    const playerPresent = {...this.state.playerPresent}
                     playerPresent.player2 = false;
                     axios.put(`/api/gameInstance/${gameInstanceId}`, {playerPresent})
                         .then((response) => {
                             console.log(response);
-                            this.setState({playerPresent: playerPresent});
+                            // this.setState({playerPresent: playerPresent});
                         })
                 })
         }
     }
 
     componentDidMount() {
-        const path = this.props.match.path;
-        const player = path.split('/')[2];
+        // const path = this.props.match.path;
+        // const player = path.split('/')[2];
         this.joinMatch();
         setTimeout(this.waitForPlayerTwo, 1000);
-        if (player === "playerTwo") {
-            setTimeout(this.waitForGameStart, 2000);
-        }
+        // if (player === "playerTwo") {
+        //     setTimeout(this.waitForGameStart, 2000);
+        // }
     }
 
     waitForPlayerTwo = () => {
@@ -507,26 +509,26 @@ class PlayerView extends React.Component {
 
     trackCurrentPlay = () => {
         const currentPlay = {...this.state.currentPlay};
-        // if ((this.state.targetSpace.targetX >= currentPlay.lastPlay.lastX) && (this.state.targetSpace.targetY >= currentPlay.lastPlay.lastY)) {
-        //     currentPlay.end.endX = this.state.targetSpace.targetX;
-        //     currentPlay.end.endY = this.state.targetSpace.targetY;
-        // }
-        // if ((this.state.targetSpace.targetX < currentPlay.lastPlay.lastX) && (this.state.targetSpace.targetY <= currentPlay.lastPlay.lastY)) {
-        //     currentPlay.start.startX = this.state.targetSpace.targetX;
-        //     currentPlay.start.startY = this.state.targetSpace.targetY;
-        // }
-        // currentPlay.lastPlay.lastX = this.state.targetSpace.targetX;
-        // currentPlay.lastPlay.lastY = this.state.targetSpace.targetY;
-        if (currentPlay.start.startX === undefined) {
-            currentPlay.start.startX = this.state.targetSpace.targetX;
-            currentPlay.start.startY = this.state.targetSpace.targetY;
-        }
-        if ((this.state.targetSpace.targetX >= currentPlay.start.startX) && (this.state.targetSpace.targetY >= currentPlay.start.startY)) {
+        if ((this.state.targetSpace.targetX >= currentPlay.lastPlay.lastX) && (this.state.targetSpace.targetY >= currentPlay.lastPlay.lastY)) {
             currentPlay.end.endX = this.state.targetSpace.targetX;
             currentPlay.end.endY = this.state.targetSpace.targetY;
         }
+        if ((this.state.targetSpace.targetX < currentPlay.lastPlay.lastX) && (this.state.targetSpace.targetY <= currentPlay.lastPlay.lastY)) {
+            currentPlay.start.startX = this.state.targetSpace.targetX;
+            currentPlay.start.startY = this.state.targetSpace.targetY;
+        }
         currentPlay.lastPlay.lastX = this.state.targetSpace.targetX;
         currentPlay.lastPlay.lastY = this.state.targetSpace.targetY;
+        // if (currentPlay.start.startX === undefined) {
+        //     currentPlay.start.startX = this.state.targetSpace.targetX;
+        //     currentPlay.start.startY = this.state.targetSpace.targetY;
+        // }
+        // if ((this.state.targetSpace.targetX >= currentPlay.start.startX) && (this.state.targetSpace.targetY >= currentPlay.start.startY)) {
+        //     currentPlay.end.endX = this.state.targetSpace.targetX;
+        //     currentPlay.end.endY = this.state.targetSpace.targetY;
+        // }
+        // currentPlay.lastPlay.lastX = this.state.targetSpace.targetX;
+        // currentPlay.lastPlay.lastY = this.state.targetSpace.targetY;
         this.setState({currentPlay: currentPlay});
     }
 

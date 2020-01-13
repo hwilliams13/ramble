@@ -47,6 +47,8 @@ class HomePage extends React.Component {
             <div>
                 <h3>Version Notes</h3>
                 <p>-Currently no spellchecker</p>
+                <p>-Currently can't check for hookwords</p>
+                <p>Currentlt can't return a tile to the rack once it's been played. Tile can be moved to another space on the board though.</p>
                 <p>-Refreshing the page will cause you to lose any unplayed tiles</p>
                 <h3>Rules!</h3>
                 <p>It's Scrabble but not!</p>

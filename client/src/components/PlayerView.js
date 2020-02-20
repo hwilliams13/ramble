@@ -64,7 +64,8 @@ class PlayerView extends React.Component {
             end: {
                 endX: 0,
                 endY: 0
-            }
+            },
+            direction: '' // horizontal or vertical
         },
         // initiate timers as undefined
         // will eventually add real time updates with SocketIO
@@ -472,6 +473,14 @@ class PlayerView extends React.Component {
         if ((this.state.targetSpace.targetX < currentPlay.lastPlay.lastX) && (this.state.targetSpace.targetY <= currentPlay.lastPlay.lastY)) {
             currentPlay.start.startX = this.state.targetSpace.targetX;
             currentPlay.start.startY = this.state.targetSpace.targetY;
+        }
+        if (currentPlay.start.startX == currentPlay.end.endX) {
+            // if x is equal at start and end then the play is vertical
+            currentPlay.direction = 'vertical';
+        }
+        if (currentPlay.start.startY == currentPlay.end.endY) {
+            // if y is equal at start and end then the play is horizontal
+            currentPlay.direction = 'horizontal';
         }
         currentPlay.lastPlay.lastX = this.state.targetSpace.targetX;
         currentPlay.lastPlay.lastY = this.state.targetSpace.targetY;

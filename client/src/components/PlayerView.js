@@ -297,10 +297,15 @@ class PlayerView extends React.Component {
             })
     }
 
+    // checking for a hookword first requires checking for direction of current play
+    // if current play is horizontal, hook words can only be vertical and vice versa
+
     // checkForHookWord = (currentSpace) => {
     //     if()
     // }
 
+
+    // will break this out from submitPlay soon
     // computeWordValue = (startingSpace, endingSpace) => {
     //     let wordMult = 1; // initialize word multiplier to be used at end
     //     let currentPlayPointValue = 0;
@@ -457,6 +462,7 @@ class PlayerView extends React.Component {
     }
 
     // may change play tracking to facilitate hook word tracking
+    // currenty play direction (horiz / vert) should be determined here and updated after each tile is played
     trackCurrentPlay = () => {
         const currentPlay = {...this.state.currentPlay};
         if ((this.state.targetSpace.targetX >= currentPlay.lastPlay.lastX) && (this.state.targetSpace.targetY >= currentPlay.lastPlay.lastY)) {

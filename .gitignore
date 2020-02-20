@@ -1,2 +1,5 @@
 node_modules
 template.js
+
+./models/template.js
+./controllers/template.js

@@ -16,7 +16,7 @@ class GameLobby extends React.Component {
     }
 
     componentDidMount() {
-
+        // request available game information on component mount
         axios.get('/api/gameInstance')
             .then((response) => {
                 const availableGameList = response.data;
@@ -24,6 +24,7 @@ class GameLobby extends React.Component {
             })
     }
 
+    // allow user to update field when entering a game name
     onInputChangeHandler = (e) => {
         const targetName = e.target.name;
         const targetValue = e.target.value;
@@ -32,6 +33,7 @@ class GameLobby extends React.Component {
         this.setState({newGame: newGame});
     }
 
+    // send create request with name of game to be created
     createGame = (e) => {
         e.preventDefault();
         const newGame = {
@@ -46,6 +48,8 @@ class GameLobby extends React.Component {
             })
     }
 
+    // send delete request to delete an existing game
+    // need to add lockout so that game can't be deleted while a player is inside
     deleteGame = (gameId, key) => {
         console.log(gameId);
         const availableGameList = [...this.state.availableGameList];
@@ -57,6 +61,7 @@ class GameLobby extends React.Component {
             })
     }
 
+    
     render() {
         return (
             <div>
@@ -67,6 +72,9 @@ class GameLobby extends React.Component {
                     <input type="submit" value="Create Game!" onClick={this.createGame} /> 
                 </form>
                 <h5>Available Games:</h5>
+                {/* generate list of available games from the list stored in state */}
+                {/* if both players are present, it will send you to a viewing room "lobby/gameid" */}
+                {/* if one player is presnt, it will send you to the game as the other player, "lobby/playerTwo/gameid" */}
                 {this.state.availableGameList.map((game, key) => {
                     return (
                         <div>

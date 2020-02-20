@@ -66,25 +66,14 @@ class PlayerView extends React.Component {
                 endY: 0
             }
         },
-        // currentPlay: {
-        //     lastPlay: {
-        //         lastX: undefined,
-        //         lastY: undefined
-        //     },
-        //     start: {
-        //         startX: undefined,
-        //         startY: undefined
-        //     },
-        //     end: {
-        //         endX: undefined,
-        //         endY: undefined
-        //     }
-        // },
+        // initiate timers as undefined
+        // will eventually add real time updates with SocketIO
         waitForPlayerTwoTimer: undefined,
         waitForTurnTimer: undefined,
         waitForGameStartTimer: undefined
     }
 
+    // general refresh to call with the setIntervals
     refreshData = () => {
         const { gameInstanceId } = this.props.match.params;
 
@@ -103,6 +92,8 @@ class PlayerView extends React.Component {
             })
     }
 
+    // determines which player - one or two - to update as present
+    // checks the path - lobby/playerOne/gameid - to determine the player
     joinMatch = () => {
         const path = this.props.match.path;
         const player = path.split('/')[2];
@@ -111,7 +102,7 @@ class PlayerView extends React.Component {
 
             axios.get(`/api/gameInstance/${gameInstanceId}`)
                 .then((response) => {
-                    console.log(response.data[0]);
+                    // console.log(response.data[0]);
                     const previousState = {...this.state};
                     previousState.name = response.data[0].name;
                     previousState.gameBoard = response.data[0].gameBoard;
@@ -125,7 +116,7 @@ class PlayerView extends React.Component {
                     playerPresent.player1 = true;
                     axios.put(`/api/gameInstance/${gameInstanceId}`, {playerPresent})
                         .then((response) => {
-                            console.log(response);
+                            // console.log(response);
                             this.setState({playerPresent: playerPresent});
                         })
                 })
@@ -148,13 +139,15 @@ class PlayerView extends React.Component {
                     playerPresent.player2 = true;
                     axios.put(`/api/gameInstance/${gameInstanceId}`, {playerPresent})
                         .then((response) => {
-                            console.log(response);
+                            // console.log(response);
                             this.setState({playerPresent: playerPresent});
                         })
                 })
         }
     }
 
+    // same as join match except to update as not present
+    // the rest of the state data is unnecessary becasue you are leaving the game
     leaveMatch = () => {
         const path = this.props.match.path;
         const player = path.split('/')[2];
@@ -164,14 +157,7 @@ class PlayerView extends React.Component {
             axios.get(`/api/gameInstance/${gameInstanceId}`)
                 .then((response) => {
                     console.log(response.data[0]);
-                    // const previousState = {...this.state};
-                    // previousState.name = response.data[0].name;
-                    // previousState.gameBoard = response.data[0].gameBoard;
-                    // previousState.remainingTileList = response.data[0].remainingTileList;
-                    // previousState.playerPresent = response.data[0].playerPresent;
-                    // previousState.playerTurn = response.data[0].playerTurn;
-                    // this.setState(previousState);
-                    // const playerPresent = previousState.playerPresent;
+                    // don't need to update rest of state data
                     const playerPresent = {...this.state.playerPresent};
                     playerPresent.player1 = false;
                     axios.put(`/api/gameInstance/${gameInstanceId}`, {playerPresent})
@@ -186,14 +172,7 @@ class PlayerView extends React.Component {
             axios.get(`/api/gameInstance/${gameInstanceId}`)
                 .then((response) => {
                     console.log(response.data[0]);
-                    // const previousState = {...this.state};
-                    // previousState.name = response.data[0].name;
-                    // previousState.gameBoard = response.data[0].gameBoard;
-                    // previousState.remainingTileList = response.data[0].remainingTileList;
-                    // previousState.playerPresent = response.data[0].playerPresent;
-                    // previousState.playerTurn = response.data[0].playerTurn;
-                    // this.setState(previousState);
-                    // const playerPresent = previousState.playerPresent;
+                    // don't need to update rest of state data
                     const playerPresent = {...this.state.playerPresent}
                     playerPresent.player2 = false;
                     axios.put(`/api/gameInstance/${gameInstanceId}`, {playerPresent})
@@ -205,16 +184,18 @@ class PlayerView extends React.Component {
         }
     }
 
+    
     componentDidMount() {
-        // const path = this.props.match.path;
-        // const player = path.split('/')[2];
+        // join match needs to happen as soon as PlayerView component is loaded
+        // join match could theoretically happen from the lobby as well after the player number is determined
         this.joinMatch();
+        // the program needs to know to wait for player two
         setTimeout(this.waitForPlayerTwo, 1000);
-        // if (player === "playerTwo") {
-        //     setTimeout(this.waitForGameStart, 2000);
-        // }
+        
     }
 
+    // program needs to know when player two has arrived so that the game can begin
+    // Eventually will be an automatic start with a visual timer
     waitForPlayerTwo = () => {
         const path = this.props.match.path;
         const player = path.split('/')[2];
@@ -236,6 +217,7 @@ class PlayerView extends React.Component {
         this.setState({waitForPlayerTwoTimer: waitForPlayerTwoTimer});
     }
 
+    // refreshes the play tracker held in state
     resetCurrentPlay = () => {
         const currentPlay = {
             lastPlay: {
@@ -254,24 +236,8 @@ class PlayerView extends React.Component {
         this.setState({currentPlay: currentPlay});
     }
 
-    // resetCurrentPlay = () => {
-    //     const currentPlay = {
-    //         lastPlay: {
-    //             lastX: undefined,
-    //             lastY: undefined
-    //         },
-    //         start: {
-    //             startX: undefined,
-    //             startY: undefined
-    //         },
-    //         end: {
-    //             endX: undefined,
-    //             endY: undefined
-    //         }
-    //     }
-    //     this.setState({currentPlay: currentPlay});
-    // }
-
+    // handles all of the updates while it is the other player's turn
+    // updates tiles on board, score, etc.
     waitForTurn = () => {
         this.resetCurrentPlay();
         const path = this.props.match.path;
@@ -302,6 +268,7 @@ class PlayerView extends React.Component {
         this.setState({waitForTurnTimer: waitForTurnTimer});
     }
 
+    // currently only playerOne can start the game
     waitForGameStart = () => { // for now playerTwo must wait for game start
         let waitForGameStartTimer = this.state.waitForGameStartTimer;
         waitForGameStartTimer = setInterval(() => {
@@ -353,6 +320,7 @@ class PlayerView extends React.Component {
     //         }
     // }
 
+    // calculates the play based on tiles occupied and coordinate data in currentPlay
     submitPlay = () => {
         let wordMult = 1; // initialize word multiplier to be used at end
         let currentPlayPointValue = 0;
@@ -418,6 +386,7 @@ class PlayerView extends React.Component {
             })
     }
 
+    // 
     drawTiles = () => {
         const { gameInstanceId } = this.props.match.params;
         const myCurrentTileList = [...this.state.myCurrentTileList];
@@ -455,16 +424,7 @@ class PlayerView extends React.Component {
         this.setState({tileBeingPlayed: tileBeingPlayed});
     }
 
-    // dragHandler = (e) => {
-    //     const tileBeingPlayed = e.target;
-    //     // const elX = parseInt(targetElement.style.left);
-    //     // const elY = parseInt(targetElement.style.top);
-    //     // console.log(e.clientX);
-    //     const mouseX = e.clientX;
-    //     const mouseY = e.clientY;
-    //     tileBeingPlayed.style.left = mouseX+'px';
-    //     tileBeingPlayed.style.top = mouseY+'px';
-    // }
+    // eventually add smooth dragging feature
 
     dragStopHandler = (e) => {
         const tileBeingPlayed = e.target;
@@ -491,22 +451,12 @@ class PlayerView extends React.Component {
         const { gameInstanceId } = this.props.match.params;
         axios.put(`/api/gameInstance/${gameInstanceId}`, {gameBoard})
             .then((response) => {
-                // const currentPlay = {...this.state.currentPlay};
-                // if ((this.state.targetSpace.targetX >= currentPlay.lastPlay.lastX) && (this.state.targetSpace.targetY >= currentPlay.lastPlay.lastY)) {
-                //     currentPlay.end.endX = this.state.targetSpace.targetX;
-                //     currentPlay.end.endY = this.state.targetSpace.targetY;
-                // }
-                // if ((this.state.targetSpace.targetX < currentPlay.lastPlay.lastX) && (this.state.targetSpace.targetY <= currentPlay.lastPlay.lastY)) {
-                //     currentPlay.start.startX = this.state.targetSpace.targetX;
-                //     currentPlay.start.startY = this.state.targetSpace.targetY;
-                // }
-                // currentPlay.lastPlay.lastX = this.state.targetSpace.targetX;
-                // currentPlay.lastPlay.lastY = this.state.targetSpace.targetY;
-                // this.setState({currentPlay: currentPlay});
+                // move details to separate function for readability
                 this.trackCurrentPlay();
             })
     }
 
+    // may change play tracking to facilitate hook words
     trackCurrentPlay = () => {
         const currentPlay = {...this.state.currentPlay};
         if ((this.state.targetSpace.targetX >= currentPlay.lastPlay.lastX) && (this.state.targetSpace.targetY >= currentPlay.lastPlay.lastY)) {
@@ -519,16 +469,6 @@ class PlayerView extends React.Component {
         }
         currentPlay.lastPlay.lastX = this.state.targetSpace.targetX;
         currentPlay.lastPlay.lastY = this.state.targetSpace.targetY;
-        // if (currentPlay.start.startX === undefined) {
-        //     currentPlay.start.startX = this.state.targetSpace.targetX;
-        //     currentPlay.start.startY = this.state.targetSpace.targetY;
-        // }
-        // if ((this.state.targetSpace.targetX >= currentPlay.start.startX) && (this.state.targetSpace.targetY >= currentPlay.start.startY)) {
-        //     currentPlay.end.endX = this.state.targetSpace.targetX;
-        //     currentPlay.end.endY = this.state.targetSpace.targetY;
-        // }
-        // currentPlay.lastPlay.lastX = this.state.targetSpace.targetX;
-        // currentPlay.lastPlay.lastY = this.state.targetSpace.targetY;
         this.setState({currentPlay: currentPlay});
     }
 

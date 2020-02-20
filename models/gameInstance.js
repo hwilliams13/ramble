@@ -26,6 +26,8 @@ const mongoose = require('./connection.js')
  * NOTE: skip this if you are not using mongoose
  *
  */
+
+// create board space objects
 const thrWrd = {mult: 3, mType: "word", currentTile: false}; // 3x word score
 const twoWrd = {mult: 2, mType: "word", currentTile: false}; // 2x word score
 
@@ -34,7 +36,7 @@ const twoLet = {mult: 2, mType: "letter", currentTile: false}; // 2x letter scor
 
 const nrmSpc = {mult: 1, mType: "normal", currentTile: false}; // normal space
 
-// tiles
+// initialize tiles
 const tileBlank = {
   letter: "",
   option: ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"],
@@ -173,38 +175,58 @@ const tileZ = {
 
 
 // make tile array
+// 100 tiles total
+// spread operator is used to load the array with unique instances instead of references to facilitate unique ids
 const tileArray = [];
+populateTileArray = () => {
+  tileArray.push({...tileJ}, {...tileK}, {...tileQ}, {...tileX}, {...tileZ});
 
-tileArray.push(tileJ, tileK, tileQ, tileX, tileZ);
+  for (i=0; i<2; i++) {
+    tileArray.push({...tileBlank}, {...tileB}, {...tileC}, {...tileF}, {...tileH}, {...tileM}, {...tileP}, {...tileV}, {...tileW}, {...tileY});
+  }
 
+  for (i=0; i<3; i++) {
+    tileArray.push({...tileG});
+  }
 
-for (i=0; i<2; i++) {
-  tileArray.push(tileBlank, tileB, tileC, tileF, tileH, tileM, tileP, tileV, tileW, tileY);
+  for (i=0; i<4; i++) {
+    tileArray.push({...tileD}, {...tileL}, {...tileS}, {...tileU});
+  }
+
+  for (i=0; i<6; i++) {
+    tileArray.push({...tileN}, {...tileR}, {...tileT});
+  }
+
+  for (i=0; i<8; i++) {
+    tileArray.push({...tileO});
+  }
+
+  for (i=0; i<9; i++) {
+    tileArray.push({...tileA}, {...tileI});
+  }
+
+  for (i=0; i<12; i++) {
+    tileArray.push({...tileE});
+  }
+
+  // console.log(tileArray);
 }
+populateTileArray();
 
-for (i=0; i<3; i++) {
-  tileArray.push(tileG);
+// give each tile a unique id from 0 to 99
+// this will facilitate tracking tile movement
+// this will also facilitate determining beginning and end of word played
+assignEachTileUniqueId = () => {
+  for (i=0; i<tileArray.length; i++) {
+    // console.log(i);
+    tileArray[i]["id"] = `${i}`;
+    // console.log(tileArray[i]);
+  }
+  // currently the final tileArray is showing each tile have the same id as the most recently assigned
+  // this must be due to the tileArray currently being loaded with references instead of unique instances
+  // console.log(tileArray);
 }
-
-for (i=0; i<4; i++) {
-  tileArray.push(tileD, tileL, tileS, tileU);
-}
-
-for (i=0; i<6; i++) {
-  tileArray.push(tileN, tileR, tileT);
-}
-
-for (i=0; i<8; i++) {
-  tileArray.push(tileO);
-}
-
-for (i=0; i<9; i++) {
-  tileArray.push(tileA, tileI);
-}
-
-for (i=0; i<12; i++) {
-  tileArray.push(tileE);
-}
+assignEachTileUniqueId();
 
 const GameInstanceSchema = new mongoose.Schema({
  name: String,
@@ -261,7 +283,7 @@ const GameInstanceSchema = new mongoose.Schema({
    type: Number,
    default: 0
   },
-  myCurrentTileList: {
+  myCurrentTileList: { // added to persist players tiles if game is accidentally left or page reloaded
     player1: {
       type: Array,
       default: []

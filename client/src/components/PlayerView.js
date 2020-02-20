@@ -456,7 +456,7 @@ class PlayerView extends React.Component {
             })
     }
 
-    // may change play tracking to facilitate hook words
+    // may change play tracking to facilitate hook word tracking
     trackCurrentPlay = () => {
         const currentPlay = {...this.state.currentPlay};
         if ((this.state.targetSpace.targetX >= currentPlay.lastPlay.lastX) && (this.state.targetSpace.targetY >= currentPlay.lastPlay.lastY)) {

@@ -503,6 +503,19 @@ class PlayerView extends React.Component {
     // alternate method will create an array of all the tiles played and their target locations
     trackCurrentPlayAlt = () => {
         const currentPlayAlt = [...this.state.currentPlayAlt];
+        for (let i = 0; i < currentPlayAlt.length; i++) {
+            console.log(this.state.tileBeingPlayed.id);
+            console.log(currentPlayAlt[i].tile.id);
+            if (this.state.tileBeingPlayed.id === currentPlayAlt[i].tile.id) {
+                console.log("same tile");
+                currentPlayAlt[i] = {
+                    tile: this.state.tileBeingPlayed,
+                    space: this.state.targetSpace
+                }
+                this.setState({currentPlayAlt: currentPlayAlt});
+                return;
+            }
+        }
         currentPlayAlt.push(
             {
                 tile: this.state.tileBeingPlayed,

@@ -5,7 +5,7 @@ class Tile extends React.Component {
     render() {
         
         return (
-            <div className="tile" draggable="true" onClick={this.props.onClick} style={this.props.style} dataletter={this.props.dataletter} datapointvalue={this.props.datapointvalue} onDragStart={this.props.onDragStart} onDragEnd={this.props.onDragEnd}>
+            <div id={this.props.dataid} className="tile" draggable="true" onClick={this.props.onClick} style={this.props.style} dataletter={this.props.dataletter} datapointvalue={this.props.datapointvalue} onDragStart={this.props.onDragStart} onDragEnd={this.props.onDragEnd}>
                 <p>
                     {
                         (this.props.dataletter === '') ?

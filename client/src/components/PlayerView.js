@@ -422,21 +422,28 @@ class PlayerView extends React.Component {
     }
 
     dragStartHandler = (e) => {
-        console.log(e.target.getAttribute("dataletter"));
+        // currently don't know how to pull the basis object from the target tile element
+        // must create a new object from the tile element information
         const tileBeingPlayed = {
             letter: e.target.getAttribute("dataletter"),
-            pointValue: parseInt(e.target.getAttribute("datapointvalue"))
+            pointValue: parseInt(e.target.getAttribute("datapointvalue")),
+            id: e.target.getAttribute("id") // need to also grab newly added id
         };
+    
         this.setState({tileBeingPlayed: tileBeingPlayed});
     }
 
     // eventually add smooth dragging feature
 
     dragStopHandler = (e) => {
+        // need to tileBeingPlayed element to establish parent to remove from
         const tileBeingPlayed = e.target;
         const parentElement = tileBeingPlayed.parentElement;
         const gameBoard = [...this.state.gameBoard];
+        // need to ensure the tile is over a space with a defined class before trying to pull class information
+        // previously would throw an error when trying to pull a class from a "void" area
         if (parentElement.getAttribute("class") != null) {
+            // gameboard spaces have complound classes
             const parentSuperClass = parentElement.getAttribute("class");
             const parentSubClass = parentSuperClass.split(" ")[0];
             
@@ -448,11 +455,14 @@ class PlayerView extends React.Component {
                 gameBoard[targetX][targetY].currentTile = false;
             }
         }
+        // remove tile from myCurrentTIleList once it's set on the board
         this.removeTileFromHand(tileBeingPlayed);
         if (parentElement.getAttribute("id") === "play-area") {
+            // remove tile element from previous place on screen
             parentElement.removeChild(tileBeingPlayed);
         }
         gameBoard[this.state.targetSpace.targetX][this.state.targetSpace.targetY].currentTile = {...this.state.tileBeingPlayed};
+        // the tile displaying on the board is actually handled in the GameBoard component render
         this.setState({gameBoard: gameBoard});
         const { gameInstanceId } = this.props.match.params;
         axios.put(`/api/gameInstance/${gameInstanceId}`, {gameBoard})
@@ -541,7 +551,7 @@ class PlayerView extends React.Component {
                                 return (
                                     (tile == null) ?
                                     null :
-                                    <Tile onClick={this.clickHandler} style={{position: 'absolute', left: `${document.getElementById('tile-rack').getBoundingClientRect().left+5+(index*35)}px`, top: `${document.getElementById('tile-rack').getBoundingClientRect().top+5}px`}} draggable="true" dataletter={tile.letter} datapointvalue={tile.pointValue} onDragStart={this.dragStartHandler} onDragEnd={this.dragStopHandler} />
+                                    <Tile onClick={this.clickHandler} style={{position: 'absolute', left: `${document.getElementById('tile-rack').getBoundingClientRect().left+5+(index*35)}px`, top: `${document.getElementById('tile-rack').getBoundingClientRect().top+5}px`}} draggable="true" dataletter={tile.letter} datapointvalue={tile.pointValue} dataid={tile.id} onDragStart={this.dragStartHandler} onDragEnd={this.dragStopHandler} />
                                 )
                             })}
                         </div>

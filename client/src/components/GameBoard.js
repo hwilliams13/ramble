@@ -25,7 +25,7 @@ class GameBoard extends React.Component {
                                     {
                                         !rowSpace.currentTile ? 
                                         null :
-                                        <Tile style={{position: 'absolute', left: `${document.getElementById(`${id}`).getBoundingClientRect().left+5}px`, top: `${document.getElementById(`${id}`).getBoundingClientRect().top+5}px`}} draggable="true" dataletter={rowSpace.currentTile.letter} datapointvalue={rowSpace.currentTile.pointValue} onDragStart={this.props.dragStartHandler} onDragEnd={this.props.dragStopHandler} />
+                                        <Tile style={{position: 'absolute', left: `${document.getElementById(`${id}`).getBoundingClientRect().left+5}px`, top: `${document.getElementById(`${id}`).getBoundingClientRect().top+5}px`}} draggable="true" dataletter={rowSpace.currentTile.letter} datapointvalue={rowSpace.currentTile.pointValue} dataid={rowSpace.currentTile.id} onDragStart={this.props.dragStartHandler} onDragEnd={this.props.dragStopHandler} />
                                     }
                                 </div>
                             )

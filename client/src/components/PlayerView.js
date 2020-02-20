@@ -67,6 +67,7 @@ class PlayerView extends React.Component {
             },
             direction: '' // horizontal or vertical
         },
+        currentPlayAlt: [],
         // initiate timers as undefined
         // will eventually add real time updates with SocketIO
         waitForPlayerTwoTimer: undefined,
@@ -435,6 +436,7 @@ class PlayerView extends React.Component {
 
     // eventually add smooth dragging feature
 
+    // important to note dragStop triggers only when tile is released
     dragStopHandler = (e) => {
         // need to tileBeingPlayed element to establish parent to remove from
         const tileBeingPlayed = e.target;
@@ -469,6 +471,7 @@ class PlayerView extends React.Component {
             .then((response) => {
                 // move details to separate function for readability
                 this.trackCurrentPlay();
+                this.trackCurrentPlayAlt();
             })
     }
 
@@ -497,6 +500,18 @@ class PlayerView extends React.Component {
         this.setState({currentPlay: currentPlay});
     }
 
+    // alternate method will create an array of all the tiles played and their target locations
+    trackCurrentPlayAlt = () => {
+        const currentPlayAlt = [...this.state.currentPlayAlt];
+        currentPlayAlt.push(
+            {
+                tile: this.state.tileBeingPlayed,
+                space: this.state.targetSpace
+            }
+        )
+        this.setState({currentPlayAlt: currentPlayAlt});
+    }
+
     removeTileFromHand = (target) => {
         const myCurrentTileList = [...this.state.myCurrentTileList];
         for (let i = 0; i < myCurrentTileList.length; i++) {
@@ -510,6 +525,7 @@ class PlayerView extends React.Component {
         }
     }
 
+    // important to note dropTarget is updated everytime a tile enters a new target during 1 continuous mouse drag
     dropTargetHandler = (e) => {
         if(e.target.getAttribute("id") != null) {
             const id = e.target.getAttribute("id");

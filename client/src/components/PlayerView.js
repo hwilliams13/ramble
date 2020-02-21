@@ -529,7 +529,7 @@ class PlayerView extends React.Component {
         const myCurrentTileList = [...this.state.myCurrentTileList];
         for (let i = 0; i < myCurrentTileList.length; i++) {
             if (myCurrentTileList[i] != null) {
-                if (myCurrentTileList[i].letter === target.getAttribute("dataletter")) {
+                if (myCurrentTileList[i].id === target.getAttribute("id")) {
                     myCurrentTileList[i] = null;
                     this.setState({myCurrentTileList: myCurrentTileList});
                     return;

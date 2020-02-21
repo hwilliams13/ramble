@@ -238,10 +238,16 @@ class PlayerView extends React.Component {
         this.setState({currentPlay: currentPlay});
     }
 
+    resetCurrentPlayAlt = () => {
+        const currentPlayAlt = [];
+        this.setState({currentPlayAlt: currentPlayAlt});
+    }
+
     // handles all of the updates while it is the other player's turn
     // updates tiles on board, score, etc.
     waitForTurn = () => {
         this.resetCurrentPlay();
+        this.resetCurrentPlayAlt();
         const path = this.props.match.path;
         const player = path.split('/')[2];
         let waitForTurnTimer = this.state.waitForTurnTimer;
@@ -303,32 +309,12 @@ class PlayerView extends React.Component {
     // if current play is horizontal, hook words can only be vertical and vice versa
 
     // checkForHookWord = (currentSpace) => {
-    //     if()
+        
     // }
 
 
     // will break this out from submitPlay soon
-    // computeWordValue = (startingSpace, endingSpace) => {
-    //     let wordMult = 1; // initialize word multiplier to be used at end
-    //     let currentPlayPointValue = 0;
-    //     let wordlength = this.state.currentPlay.end.endX - this.state.currentPlay.start.startX + 1;
-    //         for (let i = 0; i < wordlength; i++) {
-    //             let currentSpace = this.state.gameBoard[this.state.currentPlay.start.startX + i][this.state.currentPlay.start.startY];
-    //             if (currentSpace.mType === "word") {
-    //                 wordMult = wordMult * currentSpace.mult;
-    //                 currentPlayPointValue += currentSpace.currentTile.pointValue;
-    //             }
-    //             if (currentSpace.mType === "letter") {
-    //                 currentPlayPointValue += (currentSpace.mult * currentSpace.currentTile.pointValue);
-    //             }
-    //             if (currentSpace.mType === "normal") {
-    //                 currentPlayPointValue += currentSpace.currentTile.pointValue;
-    //             }
-    //         }
-    // }
-
-    // calculates the play based on tiles occupied and coordinate data in currentPlay
-    submitPlay = () => {
+    computeWordValue = () => {
         let wordMult = 1; // initialize word multiplier to be used at end
         let currentPlayPointValue = 0;
         if (this.state.currentPlay.end.endX > this.state.currentPlay.start.startX) {
@@ -363,7 +349,14 @@ class PlayerView extends React.Component {
                 }
             }
         }
-        currentPlayPointValue = currentPlayPointValue * wordMult;        
+        currentPlayPointValue = currentPlayPointValue * wordMult;
+
+        return currentPlayPointValue;
+    }
+
+    // calculates the play based on tiles occupied and coordinate data in currentPlay
+    submitPlay = () => {
+        let currentPlayPointValue = this.computeWordValue();        
         this.setState({currentPlayPointValue: currentPlayPointValue});
         const score = {...this.state.score};
         const playerTurn = {...this.state.playerTurn};
@@ -523,6 +516,18 @@ class PlayerView extends React.Component {
             }
         )
         this.setState({currentPlayAlt: currentPlayAlt});
+    }
+
+    getCurrentPlayDirection = () => {
+        const currentPlay = this.state.currentPlayAlt;
+        if (currentPlay[0].space.targetX == currentPlay[currentPlay.length-1].space.targetX) {
+            // if x is equal at start and end then the play is vertical
+            return 'vertical';
+        }
+        if (currentPlay[0].space.targetY == currentPlay[currentPlay.length-1].space.targetY) {
+            // if y is equal at start and end then the play is horizontal
+            return 'horizontal';
+        }
     }
 
     removeTileFromHand = (target) => {
